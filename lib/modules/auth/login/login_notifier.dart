@@ -1,20 +1,18 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:mobile_app/core/auth/auth_notifier.dart";
 import "package:mobile_app/core/constants/storage_keys.dart";
-import "package:mobile_app/secure_storage.dart";
+import "package:mobile_app/core/utils/secure_storage.dart";
 import "package:mobile_app/services/api/auth_api.dart";
 
-class RegisterNotifier extends AsyncNotifier<void> {
+class LoginNotifier extends AsyncNotifier<void> {
   @override
   Future<void> build() async {}
 
-  Future<void> register(String name, String email, String password) async {
+  Future<void> login(String email, String password) async {
     state = const AsyncLoading();
 
     state = await AsyncValue.guard(() async {
-      final response = await ref
-          .read(authApiProvider)
-          .register(name, email, password);
+      final response = await ref.read(authApiProvider).login(email, password);
 
       await ref
           .read(secureStorageProvider)
@@ -25,6 +23,6 @@ class RegisterNotifier extends AsyncNotifier<void> {
   }
 }
 
-final registerProvider = AsyncNotifierProvider<RegisterNotifier, void>(
-  RegisterNotifier.new,
+final loginProvider = AsyncNotifierProvider<LoginNotifier, void>(
+  LoginNotifier.new,
 );

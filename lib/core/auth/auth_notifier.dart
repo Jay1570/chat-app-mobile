@@ -1,7 +1,7 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:mobile_app/core/constants/storage_keys.dart";
 import "package:mobile_app/models/user.dart";
-import "package:mobile_app/secure_storage.dart";
+import "package:mobile_app/core/utils/secure_storage.dart";
 import "package:mobile_app/services/api/auth_api.dart";
 
 class AuthNotifier extends AsyncNotifier<User?> {

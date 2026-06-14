@@ -1,6 +1,6 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:mobile_app/core/network/api_client.dart";
-import "package:mobile_app/models/login_response.dart";
+import "package:mobile_app/modules/auth/models/login_response.dart";
 import "package:mobile_app/models/user.dart";
 
 class AuthApi {

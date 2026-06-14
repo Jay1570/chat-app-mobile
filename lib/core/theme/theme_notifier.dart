@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:mobile_app/secure_storage.dart";
+import "package:mobile_app/core/utils/secure_storage.dart";
 import "package:mobile_app/core/constants/storage_keys.dart";
 
 class ThemeSettings {
