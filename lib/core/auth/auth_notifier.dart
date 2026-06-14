@@ -10,7 +10,6 @@ class AuthNotifier extends AsyncNotifier<User?> {
     final storage = ref.read(secureStorageProvider);
 
     final token = await storage.read(key: jwtTokenStorageKey);
-
     if (token == null) {
       return null;
     }
@@ -32,22 +31,3 @@ class AuthNotifier extends AsyncNotifier<User?> {
 final authProvider = AsyncNotifierProvider<AuthNotifier, User?>(
   AuthNotifier.new,
 );
-
-class LoginNotifier extends AsyncNotifier<void> {
-  @override
-  Future<void> build() async {}
-
-  Future<void> login(String email, String password) async {
-    state = const AsyncLoading();
-
-    final response = await ref.read(authApiProvider).login(email, password);
-
-    await ref
-        .read(secureStorageProvider)
-        .write(key: jwtTokenStorageKey, value: response.token);
-
-    ref.read(authProvider.notifier).setUser(response.user);
-
-    state = const AsyncData(null);
-  }
-}

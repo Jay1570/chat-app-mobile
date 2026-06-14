@@ -1,7 +1,7 @@
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:dio/dio.dart";
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
-import "package:mobile_app/auth_notifier.dart";
+import "package:mobile_app/core/auth/auth_notifier.dart";
 import "package:mobile_app/core/constants/storage_keys.dart";
 import "package:mobile_app/snackbar.dart";
 

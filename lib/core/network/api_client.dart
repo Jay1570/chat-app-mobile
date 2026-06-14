@@ -10,7 +10,6 @@ class ApiClient {
 
   Future<T> get<T>(String path, T Function(Object? json) fromJson) async {
     final response = await _dio.get<Map<dynamic, dynamic>>(path);
-
     final apiResponse = ApiResponse<T>.fromJson(
       Map<String, dynamic>.from(response.data ?? {}),
       fromJson,

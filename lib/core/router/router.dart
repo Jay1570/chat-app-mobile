@@ -3,8 +3,10 @@ import "dart:async";
 import "package:flutter/cupertino.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
-import "package:mobile_app/auth_notifier.dart";
+import "package:mobile_app/core/auth/auth_notifier.dart";
 import "package:mobile_app/models/user.dart";
+import "package:mobile_app/modules/Auth/login/login_screen.dart";
+import "package:mobile_app/modules/Auth/register/register_screen.dart";
 import "package:mobile_app/splash_screen.dart";
 
 class RouterNotifier extends ChangeNotifier {
@@ -22,36 +24,44 @@ final routerNotifierProvider = Provider<RouterNotifier>(
 final routerProvider = Provider<GoRouter>((ref) {
   final authNotifier = ref.read(routerNotifierProvider);
   return GoRouter(
-    refreshListenable: ValueNotifier(authNotifier),
+    refreshListenable: authNotifier,
     initialLocation: "/splash",
     redirect: (context, state) {
       final auth = ref.read(authProvider);
 
+      final isSplash = state.matchedLocation == "/splash";
+
+      const publicRoutes = {"/login", "/register"};
+      final isPublicRoute = publicRoutes.contains(state.matchedLocation);
+
       if (auth.isLoading) {
-        return "/splash";
+        return isSplash ? null : "/splash";
       }
 
       final loggedIn = auth.value != null;
-      final isLoginRoute = state.matchedLocation == "/login";
 
-      if (!loggedIn && !isLoginRoute) {
-        final from = Uri.encodeComponent(state.uri.toString());
-
-        return "/login?from=$from";
+      if (isSplash) {
+        return loggedIn ? "/home" : "/login";
       }
 
-      if (loggedIn && isLoginRoute) {
-        final from = state.uri.queryParameters["from"];
+      if (!loggedIn && !isPublicRoute) {
+        return "/login";
+      }
 
-        return from ?? "/home";
+      if (loggedIn && isPublicRoute) {
+        return "/home";
       }
 
       return null;
     },
     routes: [
-      GoRoute(path: "/splash", builder: (_, __) => const SplashScreen()),
-      GoRoute(path: "/login", builder: (context, state) => const SizedBox()),
+      GoRoute(path: "/splash", builder: (_, _) => const SplashScreen()),
+      GoRoute(path: "/login", builder: (context, state) => const LoginScreen()),
       GoRoute(path: "/home", builder: (context, state) => const SizedBox()),
+      GoRoute(
+        path: "/register",
+        builder: (context, state) => const RegisterScreen(),
+      ),
     ],
   );
 });

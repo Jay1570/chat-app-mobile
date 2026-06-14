@@ -10,15 +10,23 @@ class AuthApi {
 
   Future<LoginResponse> login(String email, String password) {
     return _apiClient.post(
-      "/auth/login",
+      "/users/login",
       data: {"email": email, "password": password},
+      fromJson: (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
+    );
+  }
+
+  Future<LoginResponse> register(String name, String email, String password) {
+    return _apiClient.post(
+      "/users/register",
+      data: {"name": name, "email": email, "password": password},
       fromJson: (json) => LoginResponse.fromJson(json as Map<String, dynamic>),
     );
   }
 
   Future<User> me() {
     return _apiClient.get(
-      "/me",
+      "/users/me",
       (json) => User.fromJson(json as Map<String, dynamic>),
     );
   }

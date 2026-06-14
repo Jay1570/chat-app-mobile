@@ -1,6 +1,6 @@
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:mobile_app/auth_notifier.dart";
+import "package:mobile_app/core/auth/auth_notifier.dart";
 
 class SplashScreen extends ConsumerWidget {
   const SplashScreen({super.key});
