@@ -1,3 +1,4 @@
+import "package:chathub/main.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
@@ -21,6 +22,7 @@ final routerNotifierProvider = Provider<RouterNotifier>(
 final routerProvider = Provider<GoRouter>((ref) {
   final authNotifier = ref.read(routerNotifierProvider);
   return GoRouter(
+    navigatorKey: rootNavigatorKey,
     refreshListenable: authNotifier,
     initialLocation: "/splash",
     redirect: (context, state) {
@@ -42,10 +44,17 @@ final routerProvider = Provider<GoRouter>((ref) {
       }
 
       if (!loggedIn && !isPublicRoute) {
-        return "/login";
+        final from = Uri.encodeComponent(state.uri.toString());
+        return "/login?from=$from";
       }
 
       if (loggedIn && isPublicRoute) {
+        final from = state.uri.queryParameters["from"];
+
+        if (from != null && from.isNotEmpty) {
+          return Uri.decodeComponent(from);
+        }
+
         return "/home";
       }
 

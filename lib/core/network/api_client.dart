@@ -33,7 +33,7 @@ class ApiClient {
     final apiResponse = ApiResponse<T>.fromJson(response.data!, fromJson);
 
     if (!apiResponse.success) {
-      throw Exception(apiResponse.message);
+      throw ApiException(apiResponse);
     }
 
     return apiResponse.data as T;

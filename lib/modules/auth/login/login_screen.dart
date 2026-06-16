@@ -1,7 +1,8 @@
+import "package:chathub/core/error_handler.dart";
+import "package:chathub/core/utils/snackbar.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
-import "package:chathub/core/auth/auth_notifier.dart";
 import "package:chathub/modules/auth/login/login_notifier.dart";
 
 class LoginScreen extends ConsumerStatefulWidget {
@@ -37,14 +38,18 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final colors = Theme.of(context).colorScheme;
     final loginState = ref.watch(loginProvider);
 
     ref.listen(loginProvider, (_, next) {
       next.whenOrNull(
         error: (error, _) {
-          ScaffoldMessenger.of(context)
-            ..hideCurrentSnackBar()
-            ..showSnackBar(SnackBar(content: Text(error.toString())));
+          final errorInfo = resolveError(error);
+
+          AppSnackbar.showError(
+            title: errorInfo.title,
+            message: errorInfo.message,
+          );
         },
       );
     });

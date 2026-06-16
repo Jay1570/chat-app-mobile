@@ -7,6 +7,7 @@ import "package:chathub/core/theme/theme_notifier.dart";
 import "package:chathub/core/utils/no_internet_screen.dart";
 
 final rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
+final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   runApp(const ProviderScope(child: App()));

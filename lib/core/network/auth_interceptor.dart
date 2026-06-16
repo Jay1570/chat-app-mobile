@@ -1,9 +1,7 @@
-import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:dio/dio.dart";
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:chathub/core/auth/auth_notifier.dart";
 import "package:chathub/core/constants/storage_keys.dart";
-import "package:chathub/core/utils/snackbar.dart";
 
 class AuthInterceptor extends Interceptor {
   AuthInterceptor({required this.storage, required this.authNotifier});
@@ -26,6 +24,18 @@ class AuthInterceptor extends Interceptor {
   }
 
   @override
+  void onResponse(
+    Response response,
+    ResponseInterceptorHandler handler,
+  ) async {
+    if (response.statusCode == 401) {
+      await authNotifier.logout();
+    }
+
+    handler.next(response);
+  }
+
+  @override
   Future<void> onError(
     DioException err,
     ErrorInterceptorHandler handler,
@@ -33,13 +43,6 @@ class AuthInterceptor extends Interceptor {
     if (err.response?.statusCode == 401) {
       await authNotifier.logout();
     }
-
-    final message = err.response?.data["message"] ?? "Something went wrong";
-
-    AppSnackbar.showError(
-      message: message.toString(),
-      contentType: ContentType.failure,
-    );
 
     handler.next(err);
   }
