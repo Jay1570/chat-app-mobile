@@ -1,3 +1,6 @@
 {
-    "editor.tabSize": 2
+    "editor.tabSize": 2,
+    "dart.enableSdkFormatter": true,
+    "editor.defaultFormatter": "Dart-Code.flutter",
+    "prettier.enable": false
 }

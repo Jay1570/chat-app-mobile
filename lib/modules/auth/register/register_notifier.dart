@@ -1,8 +1,8 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:mobile_app/core/auth/auth_notifier.dart";
-import "package:mobile_app/core/constants/storage_keys.dart";
-import "package:mobile_app/core/utils/secure_storage.dart";
-import "package:mobile_app/services/api/auth_api.dart";
+import "package:chathub/core/auth/auth_notifier.dart";
+import "package:chathub/core/constants/storage_keys.dart";
+import "package:chathub/core/utils/secure_storage.dart";
+import "package:chathub/services/api/auth_api.dart";
 
 class RegisterNotifier extends AsyncNotifier<void> {
   @override

@@ -1,4 +1,4 @@
-# mobile_app
+# chathub
 
 A new Flutter project.
 

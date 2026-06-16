@@ -1,9 +1,9 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:mobile_app/core/constants/storage_keys.dart";
-import "package:mobile_app/core/network/api_exception.dart";
-import "package:mobile_app/models/user.dart";
-import "package:mobile_app/core/utils/secure_storage.dart";
-import "package:mobile_app/services/api/auth_api.dart";
+import "package:chathub/core/constants/storage_keys.dart";
+import "package:chathub/core/network/api_exception.dart";
+import "package:chathub/models/user.dart";
+import "package:chathub/core/utils/secure_storage.dart";
+import "package:chathub/services/api/auth_api.dart";
 
 class AuthNotifier extends AsyncNotifier<User?> {
   @override

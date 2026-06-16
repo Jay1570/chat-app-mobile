@@ -1,9 +1,8 @@
 import "package:dio/dio.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:mobile_app/core/auth/auth_notifier.dart";
+import "package:chathub/core/auth/auth_notifier.dart";
 import "dart:math" as math;
-
 
 class SplashScreen extends ConsumerWidget {
   const SplashScreen({super.key});

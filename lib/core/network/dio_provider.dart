@@ -1,8 +1,8 @@
 import "package:dio/dio.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:mobile_app/core/auth/auth_notifier.dart";
-import "package:mobile_app/core/network/auth_interceptor.dart";
-import "package:mobile_app/core/utils/secure_storage.dart";
+import "package:chathub/core/auth/auth_notifier.dart";
+import "package:chathub/core/network/auth_interceptor.dart";
+import "package:chathub/core/utils/secure_storage.dart";
 
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
@@ -14,7 +14,12 @@ final dioProvider = Provider<Dio>((ref) {
     ),
   );
 
-  dio.interceptors.add(AuthInterceptor(storage: ref.read(secureStorageProvider), authNotifier: ref.read(authProvider.notifier)));
+  dio.interceptors.add(
+    AuthInterceptor(
+      storage: ref.read(secureStorageProvider),
+      authNotifier: ref.read(authProvider.notifier),
+    ),
+  );
   dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
 
   return dio;

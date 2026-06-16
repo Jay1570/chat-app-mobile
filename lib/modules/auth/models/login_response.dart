@@ -1,5 +1,5 @@
 import "package:json_annotation/json_annotation.dart";
-import "package:mobile_app/models/user.dart";
+import "package:chathub/models/user.dart";
 
 part "login_response.g.dart";
 
@@ -15,4 +15,3 @@ class LoginResponse {
 
   Map<String, dynamic> toJson() => _$LoginResponseToJson(this);
 }
-

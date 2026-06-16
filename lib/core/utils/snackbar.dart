@@ -1,5 +1,5 @@
 import "package:flutter/material.dart";
-import "package:mobile_app/main.dart";
+import "package:chathub/main.dart";
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 
 class AppSnackbar {

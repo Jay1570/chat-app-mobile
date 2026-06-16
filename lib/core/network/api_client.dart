@@ -1,8 +1,8 @@
 import "package:dio/dio.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:mobile_app/core/network/api_exception.dart";
-import "package:mobile_app/core/network/dio_provider.dart";
-import "package:mobile_app/models/api_response.dart";
+import "package:chathub/core/network/api_exception.dart";
+import "package:chathub/core/network/dio_provider.dart";
+import "package:chathub/models/api_response.dart";
 
 class ApiClient {
   ApiClient(this._dio);

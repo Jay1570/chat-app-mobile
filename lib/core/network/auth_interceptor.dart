@@ -1,9 +1,9 @@
 import "package:awesome_snackbar_content/awesome_snackbar_content.dart";
 import "package:dio/dio.dart";
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
-import "package:mobile_app/core/auth/auth_notifier.dart";
-import "package:mobile_app/core/constants/storage_keys.dart";
-import "package:mobile_app/core/utils/snackbar.dart";
+import "package:chathub/core/auth/auth_notifier.dart";
+import "package:chathub/core/constants/storage_keys.dart";
+import "package:chathub/core/utils/snackbar.dart";
 
 class AuthInterceptor extends Interceptor {
   AuthInterceptor({required this.storage, required this.authNotifier});

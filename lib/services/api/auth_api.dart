@@ -1,7 +1,7 @@
 import "package:flutter_riverpod/flutter_riverpod.dart";
-import "package:mobile_app/core/network/api_client.dart";
-import "package:mobile_app/modules/auth/models/login_response.dart";
-import "package:mobile_app/models/user.dart";
+import "package:chathub/core/network/api_client.dart";
+import "package:chathub/modules/auth/models/login_response.dart";
+import "package:chathub/models/user.dart";
 
 class AuthApi {
   AuthApi(this._apiClient);
