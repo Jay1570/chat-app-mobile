@@ -7,7 +7,7 @@ import "package:chathub/core/utils/secure_storage.dart";
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: "http://192.168.100.20:5000/api",
+      baseUrl: "http://192.168.100.21:5000/api",
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       validateStatus: (_) => true,

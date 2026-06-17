@@ -28,34 +28,41 @@ final routerProvider = Provider<GoRouter>((ref) {
     redirect: (context, state) {
       final auth = ref.read(authProvider);
 
-      final isSplash = state.matchedLocation == "/splash";
+      const publicRoutes = {
+        "/login",
+        "/register",
+      };
 
-      const publicRoutes = {"/login", "/register"};
+      final isSplash = state.matchedLocation == "/splash";
+      final from = state.uri.queryParameters["from"];
       final isPublicRoute = publicRoutes.contains(state.matchedLocation);
 
       if (auth.isLoading) {
-        return isSplash ? null : "/splash";
+        if (isSplash) return null;
+
+        return "/splash?from=${Uri.encodeComponent(state.uri.toString())}";
       }
 
       final loggedIn = auth.value != null;
 
       if (isSplash) {
-        return loggedIn ? "/home" : "/login";
+        final target = from != null
+            ? Uri.decodeComponent(from)
+            : (loggedIn ? "/home" : "/login");
+
+        return target;
       }
 
       if (!loggedIn && !isPublicRoute) {
-        final from = Uri.encodeComponent(state.uri.toString());
-        return "/login?from=$from";
+        return "/login?from=${Uri.encodeComponent(state.uri.toString())}";
       }
 
       if (loggedIn && isPublicRoute) {
         final from = state.uri.queryParameters["from"];
 
-        if (from != null && from.isNotEmpty) {
-          return Uri.decodeComponent(from);
-        }
-
-        return "/home";
+        return from != null && from.isNotEmpty
+            ? Uri.decodeComponent(from)
+            : "/home";
       }
 
       return null;
@@ -64,6 +71,7 @@ final routerProvider = Provider<GoRouter>((ref) {
       GoRoute(path: "/splash", builder: (_, _) => const SplashScreen()),
       GoRoute(path: "/login", builder: (context, state) => const LoginScreen()),
       GoRoute(path: "/home", builder: (context, state) => const SizedBox()),
+      GoRoute(path: "/test", builder: (context, state) => const SizedBox()),
       GoRoute(
         path: "/register",
         builder: (context, state) => const RegisterScreen(),

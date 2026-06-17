@@ -25,7 +25,7 @@ class AuthInterceptor extends Interceptor {
 
   @override
   void onResponse(
-    Response response,
+    Response<dynamic> response,
     ResponseInterceptorHandler handler,
   ) async {
     if (response.statusCode == 401) {

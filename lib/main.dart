@@ -1,3 +1,4 @@
+import "package:chathub/core/url_strategy/url_strategy.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/core/network/internet_provider.dart";
@@ -10,6 +11,8 @@ final rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
+  useUrlStrategy();
+
   runApp(const ProviderScope(child: App()));
 }
 
@@ -32,6 +35,7 @@ class App extends ConsumerWidget {
       themeMode: settings.mode,
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       routerConfig: ref.watch(routerProvider),
+      debugShowCheckedModeBanner: false,
     );
   }
 }
