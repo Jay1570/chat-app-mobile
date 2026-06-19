@@ -1,4 +1,3 @@
-import "package:chathub/core/constants/regex.dart";
 import "package:chathub/core/error_handler.dart";
 import "package:chathub/core/utils/snackbar.dart";
 import "package:chathub/core/widgets/app_text_field.dart";
@@ -16,27 +15,20 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final _formKey = GlobalKey<FormState>();
-
-  final _emailController = TextEditingController();
-
-  final _passwordController = TextEditingController();
 
   @override
   void dispose() {
-    _emailController.dispose();
-    _passwordController.dispose();
     super.dispose();
   }
 
   Future<void> _login() async {
-    if (!_formKey.currentState!.validate()) {
-      return;
-    }
+    try {
+      await ref.read(loginProvider.notifier).login();
+    } catch (e) {
+      final error = resolveError(e);
 
-    await ref
-        .read(loginProvider.notifier)
-        .login(_emailController.text.trim(), _passwordController.text);
+      AppSnackbar.showError(message: error.message, title: error.title);
+    }
   }
 
   @override
@@ -44,19 +36,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
     final loginState = ref.watch(loginProvider);
-
-    ref.listen(loginProvider, (_, next) {
-      next.whenOrNull(
-        error: (error, _) {
-          final errorInfo = resolveError(error);
-
-          AppSnackbar.showError(
-            title: errorInfo.title,
-            message: errorInfo.message,
-          );
-        },
-      );
-    });
+    final controller = ref.watch(loginProvider.notifier);
 
     return Scaffold(
       body: Center(
@@ -72,81 +52,75 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
               maxHeight: 500,
               maxWidth: 400,
             ),
-            child: Form(
-              key: _formKey,
-              child: Column(
-                mainAxisSize: MainAxisSize.min,
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  Text(
-                    "Login",
-                    style: theme.textTheme.headlineLarge,
-                    textAlign: TextAlign.left,
-                  ),
-                  const SizedBox(height: 24),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  "Login",
+                  style: theme.textTheme.headlineLarge,
+                  textAlign: TextAlign.left,
+                ),
+                const SizedBox(height: 24),
 
-                  AppTextField(
-                    hintText: "Email",
-                    labelText: "Email",
-                    controller: _emailController,
-                    keyboardType: TextInputType.emailAddress,
-                    isRequired: true,
-                    validator: (value) {
-                      if (value == null || value.trim().isEmpty) {
-                        return "Email is required";
-                      }
+                AppTextField(
+                  hintText: "Email",
+                  labelText: "Email",
+                  onChanged: controller.setEmail,
+                  errorText: loginState.emailError,
+                  keyboardType: TextInputType.emailAddress,
+                  textInputAction: TextInputAction.next,
+                  isRequired: true,
+                ),
 
-                      if (!emailRegex.hasMatch(value.trim())) {
-                        return "Please enter a valid email address";
-                      }
+                const SizedBox(height: 16),
 
-                      return null;
-                    },
-                  ),
-
-                  const SizedBox(height: 16),
-
-                  AppTextField(
-                    hintText: "Password",
-                    labelText: "Password",
-                    controller: _passwordController,
-                    obscureText: true,
-                    isRequired: true,
-                    validator: (value) {
-                      if (value == null || value.isEmpty) {
-                        return "Password is required";
-                      }
-
-                      return null;
-                    },
-                  ),
-
-                  const SizedBox(height: 24),
-
-                  SizedBox(
-                    width: double.infinity,
-                    child: FilledButton(
-                      onPressed: loginState.isLoading ? null : _login,
-                      child: loginState.isLoading
-                          ? const SizedBox(
-                              width: 20,
-                              height: 20,
-                              child: CircularProgressIndicator(),
-                            )
-                          : const Text("Login"),
+                AppTextField(
+                  hintText: "Password",
+                  labelText: "Password",
+                  onChanged: controller.setPassword,
+                  errorText: loginState.passwordError,
+                  textInputAction: TextInputAction.done,
+                  obscureText: !loginState.showPassword,
+                  isRequired: true,
+                  suffixIcon: IconButton(
+                    onPressed: ref
+                        .read(loginProvider.notifier)
+                        .togglePasswordVisibility,
+                    icon: Icon(
+                      loginState.showPassword
+                          ? Icons.visibility_off
+                          : Icons.visibility,
                     ),
                   ),
-                  const SizedBox(height: 16),
-                  Center(
-                    child: TextButton(
-                      onPressed: () {
-                        rootNavigatorKey.currentContext?.go("/register");
-                      },
-                      child: const Text("Create an account"),
-                    ),
+                  onFieldSubmitted: (_) => _login(),
+                ),
+
+                const SizedBox(height: 24),
+
+                SizedBox(
+                  width: double.infinity,
+                  child: FilledButton(
+                    onPressed: loginState.isLoading ? null : _login,
+                    child: loginState.isLoading
+                        ? const SizedBox(
+                            width: 20,
+                            height: 20,
+                            child: CircularProgressIndicator(),
+                          )
+                        : const Text("Login"),
                   ),
-                ],
-              ),
+                ),
+                const SizedBox(height: 16),
+                Center(
+                  child: TextButton(
+                    onPressed: () {
+                      rootNavigatorKey.currentContext?.push("/register");
+                    },
+                    child: const Text("Create an account"),
+                  ),
+                ),
+              ],
             ),
           ),
         ),

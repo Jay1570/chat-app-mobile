@@ -1,3 +1,4 @@
+import "package:chathub/core/network/web_socket.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/core/constants/storage_keys.dart";
 import "package:chathub/core/network/api_exception.dart";
@@ -16,7 +17,9 @@ class AuthNotifier extends AsyncNotifier<User?> {
     }
 
     try {
-      return await ref.read(authApiProvider).me();
+      final response = await ref.read(authApiProvider).me();
+      await ref.read(webSocketProvider).connect(token: token);
+      return response;
     } on ApiException {
       await storage.delete(key: jwtTokenStorageKey);
 
@@ -30,7 +33,7 @@ class AuthNotifier extends AsyncNotifier<User?> {
 
   Future<void> logout() async {
     await ref.read(secureStorageProvider).delete(key: jwtTokenStorageKey);
-
+    await ref.read(webSocketProvider).disconnect();
     state = const AsyncData(null);
   }
 }

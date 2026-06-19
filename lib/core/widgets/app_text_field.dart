@@ -20,6 +20,7 @@ class AppTextField extends StatelessWidget {
     this.onFieldSubmitted,
     this.outlineBorder,
     this.isRequired = false,
+    this.errorText,
   });
 
   final TextEditingController? controller;
@@ -45,6 +46,7 @@ class AppTextField extends StatelessWidget {
   final ValueChanged<String>? onFieldSubmitted;
 
   final OutlineInputBorder? outlineBorder;
+  final String? errorText;
 
   final bool isRequired;
 
@@ -90,6 +92,7 @@ class AppTextField extends StatelessWidget {
           obscureText: obscureText,
           enabled: enabled,
           maxLines: obscureText ? 1 : maxLines,
+          forceErrorText: errorText,
           minLines: minLines,
           validator: validator,
           onChanged: onChanged,

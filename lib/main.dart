@@ -6,12 +6,14 @@ import "package:chathub/core/router/router.dart";
 import "package:chathub/core/theme/app_theme.dart";
 import "package:chathub/core/theme/theme_notifier.dart";
 import "package:chathub/core/utils/no_internet_screen.dart";
+import "package:go_router/go_router.dart";
 
 final rootScaffoldMessengerKey = GlobalKey<ScaffoldMessengerState>();
 final rootNavigatorKey = GlobalKey<NavigatorState>();
 
 void main() {
   useUrlStrategy();
+  GoRouter.optionURLReflectsImperativeAPIs = true;
 
   runApp(const ProviderScope(child: App()));
 }

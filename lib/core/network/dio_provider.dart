@@ -1,4 +1,6 @@
+import "package:chathub/core/constants/base_url.dart";
 import "package:dio/dio.dart";
+import "package:flutter/rendering.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/core/auth/auth_notifier.dart";
 import "package:chathub/core/network/auth_interceptor.dart";
@@ -7,7 +9,7 @@ import "package:chathub/core/utils/secure_storage.dart";
 final dioProvider = Provider<Dio>((ref) {
   final dio = Dio(
     BaseOptions(
-      baseUrl: "http://192.168.100.21:5000/api",
+      baseUrl: apiUrl,
       connectTimeout: const Duration(seconds: 10),
       receiveTimeout: const Duration(seconds: 10),
       validateStatus: (_) => true,
@@ -20,7 +22,13 @@ final dioProvider = Provider<Dio>((ref) {
       authNotifier: ref.read(authProvider.notifier),
     ),
   );
-  dio.interceptors.add(LogInterceptor(requestBody: true, responseBody: true));
+  dio.interceptors.add(
+    LogInterceptor(
+      requestBody: true,
+      responseBody: true,
+      logPrint: (object) => debugPrint(object.toString()),
+    ),
+  );
 
   return dio;
 });

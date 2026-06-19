@@ -2,7 +2,6 @@ import "package:dio/dio.dart";
 import "package:flutter/material.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/core/auth/auth_notifier.dart";
-import "dart:math" as math;
 
 class SplashScreen extends ConsumerWidget {
   const SplashScreen({super.key});
@@ -14,22 +13,21 @@ class SplashScreen extends ConsumerWidget {
     return Scaffold(
       body: Center(
         child: authState.when(
-          data: (_) => const SizedBox(),
-          loading: () => TweenAnimationBuilder<double>(
-            tween: Tween(begin: 1.2, end: 1.0),
-            duration: const Duration(milliseconds: 1000),
-            curve: Curves.easeOut,
-            builder: (context, value, child) {
-              return Transform.rotate(
-                angle: (value - 1.0) * 2 * math.pi,
-                child: Transform.scale(scale: value, child: child),
-              );
-            },
-            child: Image.asset(
-              "assets/icon/app_icon.png",
-              width: 140,
-              height: 140,
+          data: (_) => Container(
+            constraints: BoxConstraints(
+              maxHeight: 400,
+              maxWidth: 400,
             ),
+            padding: EdgeInsets.all(16),
+            child: Image.asset("assets/icon/app_icon.png"),
+          ),
+          loading: () => Container(
+            constraints: BoxConstraints(
+              maxHeight: 400,
+              maxWidth: 400,
+            ),
+            padding: EdgeInsets.all(16),
+            child: Image.asset("assets/icon/app_icon.png"),
           ),
           error: (error, _) {
             final isNetworkError =
