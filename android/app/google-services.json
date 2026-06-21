@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "565657632479",
+    "project_id": "chatthub-5d707",
+    "storage_bucket": "chatthub-5d707.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:565657632479:android:29dd5df192f4dd043e336a",
+        "android_client_info": {
+          "package_name": "com.example.chathub"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBbSRh6_zFAQT999i_FY8dnQOXuizp3OMI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

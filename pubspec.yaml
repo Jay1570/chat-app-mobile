@@ -44,6 +44,13 @@ dependencies:
   internet_connection_checker_plus: ^3.0.1
   freezed_annotation: ^3.1.0
   web_socket_channel: ^3.0.3
+  google_fonts: ^8.1.0
+  firebase_core: ^4.11.0
+  firebase_crashlytics: ^5.2.4
+  firebase_messaging: ^16.4.0
+  web: ^1.1.1
+  firebase_messaging_web: ^4.2.1
+  firebase_analytics: ^12.4.3
 dev_dependencies:
   flutter_test:
     sdk: flutter

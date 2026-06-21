@@ -2,5 +2,6 @@
     "editor.tabSize": 2,
     "dart.enableSdkFormatter": true,
     "editor.defaultFormatter": "Dart-Code.flutter",
-    "prettier.enable": false
+    "prettier.enable": false,
+    "cmake.sourceDirectory": "/home/jay1570/Projects/chat-app/mobile_app/windows/runner"
 }

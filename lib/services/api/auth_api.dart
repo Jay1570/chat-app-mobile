@@ -30,6 +30,16 @@ class AuthApi {
       (json) => User.fromJson(json as Map<String, dynamic>),
     );
   }
+
+  Future<void> updateFcmToken(String? fcmToken) async {
+    await _apiClient.post(
+      "/users/fcm-token",
+      data: {
+        "token": fcmToken,
+      },
+      fromJson: (_) => null,
+    );
+  }
 }
 
 final authApiProvider = Provider<AuthApi>((ref) {

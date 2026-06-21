@@ -1,6 +1,6 @@
 import "package:chathub/core/constants/base_url.dart";
 import "package:dio/dio.dart";
-import "package:flutter/rendering.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/core/auth/auth_notifier.dart";
 import "package:chathub/core/network/auth_interceptor.dart";
@@ -26,7 +26,11 @@ final dioProvider = Provider<Dio>((ref) {
     LogInterceptor(
       requestBody: true,
       responseBody: true,
-      logPrint: (object) => debugPrint(object.toString()),
+      logPrint: (object) {
+        if (kDebugMode) {
+          debugPrint(object.toString());
+        }
+      },
     ),
   );
 

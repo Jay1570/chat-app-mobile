@@ -102,13 +102,8 @@ class RegisterNotifier extends Notifier<RegisterState> {
           );
 
       await ref
-          .read(secureStorageProvider)
-          .write(
-            key: jwtTokenStorageKey,
-            value: response.token,
-          );
-
-      ref.read(authProvider.notifier).setUser(response.user);
+          .read(authProvider.notifier)
+          .setUser(token: response.token, user: response.user);
     } finally {
       state = state.copyWith(isLoading: false);
     }

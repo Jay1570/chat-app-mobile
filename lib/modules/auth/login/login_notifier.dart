@@ -1,10 +1,7 @@
 import "package:chathub/core/constants/regex.dart";
-import "package:chathub/core/network/web_socket.dart";
 import "package:chathub/modules/auth/login/login_state.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/core/auth/auth_notifier.dart";
-import "package:chathub/core/constants/storage_keys.dart";
-import "package:chathub/core/utils/secure_storage.dart";
 import "package:chathub/services/api/auth_api.dart";
 
 class LoginNotifier extends Notifier<LoginState> {
@@ -65,16 +62,8 @@ class LoginNotifier extends Notifier<LoginState> {
           .login(state.email, state.password);
 
       await ref
-          .read(secureStorageProvider)
-          .write(key: jwtTokenStorageKey, value: response.token);
-
-      ref.read(authProvider.notifier).setUser(response.user);
-
-      await ref
-          .read(webSocketProvider)
-          .connect(
-            token: response.token,
-          );
+          .read(authProvider.notifier)
+          .setUser(token: response.token, user: response.user);
     } finally {
       state = state.copyWith(isLoading: false);
     }
