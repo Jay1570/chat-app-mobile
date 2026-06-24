@@ -63,7 +63,11 @@ class LoginNotifier extends Notifier<LoginState> {
 
       await ref
           .read(authProvider.notifier)
-          .setUser(token: response.token, user: response.user);
+          .setUser(
+            accessToken: response.accessToken,
+            refreshToken: response.refreshToken,
+            user: response.user,
+          );
     } finally {
       state = state.copyWith(isLoading: false);
     }

@@ -22,7 +22,6 @@ final routerNotifierProvider = Provider<RouterNotifier>(
 final routerProvider = Provider<GoRouter>((ref) {
   final authNotifier = ref.read(routerNotifierProvider);
   return GoRouter(
-    overridePlatformDefaultLocation: true,
     navigatorKey: rootNavigatorKey,
     refreshListenable: authNotifier,
     initialLocation: "/splash",

@@ -2,8 +2,6 @@ import "package:chathub/core/constants/regex.dart";
 import "package:chathub/modules/auth/register/register_state.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/core/auth/auth_notifier.dart";
-import "package:chathub/core/constants/storage_keys.dart";
-import "package:chathub/core/utils/secure_storage.dart";
 import "package:chathub/services/api/auth_api.dart";
 
 class RegisterNotifier extends Notifier<RegisterState> {
@@ -103,7 +101,11 @@ class RegisterNotifier extends Notifier<RegisterState> {
 
       await ref
           .read(authProvider.notifier)
-          .setUser(token: response.token, user: response.user);
+          .setUser(
+            accessToken: response.accessToken,
+            refreshToken: response.refreshToken,
+            user: response.user,
+          );
     } finally {
       state = state.copyWith(isLoading: false);
     }

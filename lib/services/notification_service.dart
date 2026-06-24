@@ -51,8 +51,7 @@ class NotificationService {
       }
 
       _cachedToken = token;
-      debugPrint(token);
-      await onToken("FCM Token:- $token");
+      await onToken(token);
 
       _tokenRefreshSub = messaging.onTokenRefresh.listen((t) async {
         if (t.isNotEmpty) {
