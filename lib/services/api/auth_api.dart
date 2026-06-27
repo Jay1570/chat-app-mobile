@@ -66,7 +66,7 @@ class AuthApi {
   Future<User> me() {
     return _apiClient.get(
       "/users/me",
-      (json) => User.fromJson(json as Map<String, dynamic>),
+      fromJson: (json) => User.fromJson(json as Map<String, dynamic>),
     );
   }
 

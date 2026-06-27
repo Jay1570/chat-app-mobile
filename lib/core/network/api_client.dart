@@ -9,28 +9,81 @@ class ApiClient {
 
   final Dio _dio;
 
-  Future<T> get<T>(String path, T Function(Object? json) fromJson) async {
-    final response = await _dio.get<Map<dynamic, dynamic>>(path);
-    final apiResponse = ApiResponse<T>.fromJson(
-      Map<String, dynamic>.from(response.data ?? {}),
-      fromJson,
-    );
-
-    if (!apiResponse.success) {
-      throw ApiException(apiResponse);
-    }
-
-    return apiResponse.data as T;
-  }
+  Future<T> get<T>(
+    String path, {
+    T Function(Object? json)? fromJson,
+    Map<String, dynamic>? queryParameters,
+  }) => _request(
+    () =>
+        _dio.get<Map<String, dynamic>>(path, queryParameters: queryParameters),
+    fromJson: fromJson,
+  );
 
   Future<T> post<T>(
     String path, {
     Object? data,
-    required T Function(Object? json) fromJson,
-  }) async {
-    final response = await _dio.post<Map<String, dynamic>>(path, data: data);
+    T Function(Object? json)? fromJson,
+    Map<String, dynamic>? queryParameters,
+  }) => _request(
+    () => _dio.post<Map<String, dynamic>>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+    ),
+    fromJson: fromJson,
+  );
 
-    final apiResponse = ApiResponse<T>.fromJson(response.data!, fromJson);
+  Future<T> put<T>(
+    String path, {
+    Object? data,
+    T Function(Object? json)? fromJson,
+    Map<String, dynamic>? queryParameters,
+  }) => _request(
+    () => _dio.put<Map<String, dynamic>>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+    ),
+    fromJson: fromJson,
+  );
+
+  Future<T> patch<T>(
+    String path, {
+    Object? data,
+    T Function(Object? json)? fromJson,
+    Map<String, dynamic>? queryParameters,
+  }) => _request(
+    () => _dio.patch<Map<String, dynamic>>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+    ),
+    fromJson: fromJson,
+  );
+
+  Future<T> delete<T>(
+    String path, {
+    Object? data,
+    T Function(Object? json)? fromJson,
+    Map<String, dynamic>? queryParameters,
+  }) => _request(
+    () => _dio.delete<Map<String, dynamic>>(
+      path,
+      data: data,
+      queryParameters: queryParameters,
+    ),
+    fromJson: fromJson,
+  );
+
+  Future<T> _request<T>(
+    Future<Response<Map<String, dynamic>>> Function() call, {
+    T Function(Object? json)? fromJson,
+  }) async {
+    final response = await call();
+    final apiResponse = ApiResponse<T>.fromJson(
+      Map<String, dynamic>.from(response.data ?? {}),
+      fromJson ?? (_) => null as T,
+    );
 
     if (!apiResponse.success) {
       throw ApiException(apiResponse);
