@@ -1,11 +1,14 @@
+import 'package:chathub/core/error_handler.dart';
 import 'package:chathub/modules/conversation/conversation_list/conversation_list_state.dart';
 import 'package:chathub/services/api/conversation_api.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 
 class ConversationListNotifier extends Notifier<ConversationListState> {
   @override
   ConversationListState build() {
-    fetch();
+    Future.microtask(() => fetch());
+    // fetch();
     return const ConversationListState(isLoading: true);
   }
 
@@ -23,8 +26,11 @@ class ConversationListNotifier extends Notifier<ConversationListState> {
         nextCursor: result.nextCursor,
         nextCursorId: result.nextCursorId,
       );
-    } catch (e) {
-      state = state.copyWith(isLoading: false, error: e.toString());
+    } catch (e, st) {
+      state = state.copyWith(isLoading: false, error: resolveError(e).message);
+      if (kDebugMode) {
+        debugPrint("Error happened during conversation list fecth: $e\n$st");
+      }
     }
   }
 

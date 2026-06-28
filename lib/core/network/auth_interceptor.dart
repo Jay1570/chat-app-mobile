@@ -2,15 +2,19 @@ import "package:dio/dio.dart";
 import "package:flutter_secure_storage/flutter_secure_storage.dart";
 import "package:chathub/core/auth/auth_notifier.dart";
 import "package:chathub/core/constants/storage_keys.dart";
-import "package:chathub/core/constants/base_url.dart";
 import "package:chathub/core/utils/device_helper.dart";
 import "package:chathub/services/api/auth_api.dart";
 
 class AuthInterceptor extends Interceptor {
-  AuthInterceptor({required this.storage, required this.authNotifier});
+  AuthInterceptor({
+    required this.storage,
+    required this.authNotifier,
+    required this.dio,
+  });
 
   final FlutterSecureStorage storage;
   final AuthNotifier authNotifier;
+  final Dio dio;
 
   Future<RefreshResponse?>? _refreshFuture;
 
@@ -102,16 +106,8 @@ class AuthInterceptor extends Interceptor {
 
   Future<RefreshResponse?> _refresh(String refreshToken) async {
     try {
-      final dio = Dio(
-        BaseOptions(
-          baseUrl: apiUrl,
-          connectTimeout: const Duration(seconds: 10),
-          receiveTimeout: const Duration(seconds: 10),
-        ),
-      );
-
       final deviceId = await DeviceHelper.getOrCreateDeviceId(storage);
-      final deviceName = DeviceHelper.getDeviceName();
+      final deviceName = await DeviceHelper.getDeviceName();
       final os = DeviceHelper.getOsName();
 
       final response = await dio.post<Map<String, dynamic>>(
@@ -141,13 +137,6 @@ class AuthInterceptor extends Interceptor {
     RequestOptions requestOptions,
     String newAccessToken,
   ) {
-    final dio = Dio(
-      BaseOptions(
-        baseUrl: requestOptions.baseUrl,
-        connectTimeout: requestOptions.connectTimeout,
-        receiveTimeout: requestOptions.receiveTimeout,
-      ),
-    );
     final headers = Map<String, dynamic>.from(requestOptions.headers);
     headers["Authorization"] = newAccessToken;
 

@@ -45,19 +45,9 @@ class App extends ConsumerWidget {
     ref.watch(appBootstrapProvider);
     final settings = ref.watch(themeProvider);
 
-    final hasInternet = ref.watch(internetProvider).value ?? true;
+    final hasInternet = ref.watch(connectivityProvider).value ?? true;
     final textTheme = createTextTheme(context, "Roboto", "Roboto");
 
-    if (!hasInternet) {
-      return MaterialApp(
-        home: const NoInternetScreen(),
-        theme: AppTheme.light(Color(settings.seedColor), textTheme),
-        darkTheme: AppTheme.dark(Color(settings.seedColor), textTheme),
-        themeMode: settings.mode,
-        scaffoldMessengerKey: rootScaffoldMessengerKey,
-        debugShowCheckedModeBanner: false,
-      );
-    }
     return MaterialApp.router(
       theme: AppTheme.light(Color(settings.seedColor), textTheme),
       darkTheme: AppTheme.dark(Color(settings.seedColor), textTheme),
@@ -65,6 +55,12 @@ class App extends ConsumerWidget {
       scaffoldMessengerKey: rootScaffoldMessengerKey,
       routerConfig: ref.watch(routerProvider),
       debugShowCheckedModeBanner: false,
+      builder: (context, child) {
+        if (!hasInternet) {
+          return const NoInternetScreen();
+        }
+        return child!;
+      },
     );
   }
 }

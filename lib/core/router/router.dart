@@ -1,4 +1,5 @@
 import "package:chathub/main.dart";
+import "package:chathub/modules/conversation/conversation_list/conversation_list_screen.dart";
 import "package:flutter/cupertino.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
@@ -70,8 +71,10 @@ final routerProvider = Provider<GoRouter>((ref) {
     routes: [
       GoRoute(path: "/splash", builder: (_, _) => const SplashScreen()),
       GoRoute(path: "/login", builder: (context, state) => const LoginScreen()),
-      GoRoute(path: "/home", builder: (context, state) => const SizedBox()),
-      GoRoute(path: "/test", builder: (context, state) => const SizedBox()),
+      GoRoute(
+        path: "/home",
+        builder: (context, state) => const ConversationListScreen(),
+      ),
       GoRoute(
         path: "/register",
         builder: (context, state) => const RegisterScreen(),

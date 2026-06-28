@@ -20,6 +20,7 @@ final dioProvider = Provider<Dio>((ref) {
     AuthInterceptor(
       storage: ref.read(secureStorageProvider),
       authNotifier: ref.read(authProvider.notifier),
+      dio: dio,
     ),
   );
   dio.interceptors.add(

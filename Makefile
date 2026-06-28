@@ -9,6 +9,9 @@ gen:
 run:
 	flutter run
 
+run-web-server:
+	flutter run -d web-server --web-port 8080
+
 run-web:
 	flutter run -d chrome --web-port 8080
 

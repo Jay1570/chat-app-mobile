@@ -1,4 +1,5 @@
 class WsEvents {
+  const WsEvents._();
   static String messageNew(String conversationId) =>
       'conversation:$conversationId:message:new';
   static String messageUpdated(String conversationId) =>

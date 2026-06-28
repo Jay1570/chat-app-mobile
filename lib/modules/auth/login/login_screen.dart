@@ -15,7 +15,6 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-
   @override
   void dispose() {
     super.dispose();
@@ -26,7 +25,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
       await ref.read(loginProvider.notifier).login();
     } catch (e) {
       final error = resolveError(e);
-
+      debugPrint("$e");
       AppSnackbar.showError(message: error.message, title: error.title);
     }
   }

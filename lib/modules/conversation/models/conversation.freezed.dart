@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Conversation {
 
- String get id; String get name; String get type; String? get lastMessage; String? get lastMessageByUserId; BasicUser? get lastMessageByUser; String? get lastMessageAt; int get unreadCount; List<BasicUser> get otherUsers;
+ String get id; String get name; String get type; String? get lastMessage; String? get lastMessageByUserId; BasicUser? get lastMessageByUser; String? get lastMessageAt;@IntConverter() int get unreadCount; List<BasicUser> get otherUsers;
 /// Create a copy of Conversation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ConversationCopyWith<$Res>  {
   factory $ConversationCopyWith(Conversation value, $Res Function(Conversation) _then) = _$ConversationCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String type, String? lastMessage, String? lastMessageByUserId, BasicUser? lastMessageByUser, String? lastMessageAt, int unreadCount, List<BasicUser> otherUsers
+ String id, String name, String type, String? lastMessage, String? lastMessageByUserId, BasicUser? lastMessageByUser, String? lastMessageAt,@IntConverter() int unreadCount, List<BasicUser> otherUsers
 });
 
 
@@ -173,7 +173,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt,  int unreadCount,  List<BasicUser> otherUsers)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Conversation() when $default != null:
 return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessageByUserId,_that.lastMessageByUser,_that.lastMessageAt,_that.unreadCount,_that.otherUsers);case _:
@@ -194,7 +194,7 @@ return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt,  int unreadCount,  List<BasicUser> otherUsers)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)  $default,) {final _that = this;
 switch (_that) {
 case _Conversation():
 return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessageByUserId,_that.lastMessageByUser,_that.lastMessageAt,_that.unreadCount,_that.otherUsers);case _:
@@ -214,7 +214,7 @@ return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt,  int unreadCount,  List<BasicUser> otherUsers)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)?  $default,) {final _that = this;
 switch (_that) {
 case _Conversation() when $default != null:
 return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessageByUserId,_that.lastMessageByUser,_that.lastMessageAt,_that.unreadCount,_that.otherUsers);case _:
@@ -229,7 +229,7 @@ return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessa
 @JsonSerializable()
 
 class _Conversation implements Conversation {
-  const _Conversation({required this.id, required this.name, required this.type, this.lastMessage, this.lastMessageByUserId, this.lastMessageByUser, this.lastMessageAt, required this.unreadCount, required final  List<BasicUser> otherUsers}): _otherUsers = otherUsers;
+  const _Conversation({required this.id, required this.name, required this.type, this.lastMessage, this.lastMessageByUserId, this.lastMessageByUser, this.lastMessageAt, @IntConverter() required this.unreadCount, required final  List<BasicUser> otherUsers}): _otherUsers = otherUsers;
   factory _Conversation.fromJson(Map<String, dynamic> json) => _$ConversationFromJson(json);
 
 @override final  String id;
@@ -239,7 +239,7 @@ class _Conversation implements Conversation {
 @override final  String? lastMessageByUserId;
 @override final  BasicUser? lastMessageByUser;
 @override final  String? lastMessageAt;
-@override final  int unreadCount;
+@override@IntConverter() final  int unreadCount;
  final  List<BasicUser> _otherUsers;
 @override List<BasicUser> get otherUsers {
   if (_otherUsers is EqualUnmodifiableListView) return _otherUsers;
@@ -281,7 +281,7 @@ abstract mixin class _$ConversationCopyWith<$Res> implements $ConversationCopyWi
   factory _$ConversationCopyWith(_Conversation value, $Res Function(_Conversation) _then) = __$ConversationCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String type, String? lastMessage, String? lastMessageByUserId, BasicUser? lastMessageByUser, String? lastMessageAt, int unreadCount, List<BasicUser> otherUsers
+ String id, String name, String type, String? lastMessage, String? lastMessageByUserId, BasicUser? lastMessageByUser, String? lastMessageAt,@IntConverter() int unreadCount, List<BasicUser> otherUsers
 });
 
 

@@ -1,3 +1,4 @@
+import 'package:chathub/core/json_converters/int_converter.dart';
 import 'package:chathub/models/basic_user.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -14,7 +15,7 @@ abstract class Conversation with _$Conversation {
     String? lastMessageByUserId,
     BasicUser? lastMessageByUser,
     String? lastMessageAt,
-    required int unreadCount,
+    @IntConverter() required int unreadCount,
     required List<BasicUser> otherUsers,
   }) = _Conversation;
 

@@ -19,7 +19,7 @@ _Conversation _$ConversationFromJson(Map<String, dynamic> json) =>
               json['lastMessageByUser'] as Map<String, dynamic>,
             ),
       lastMessageAt: json['lastMessageAt'] as String?,
-      unreadCount: (json['unreadCount'] as num).toInt(),
+      unreadCount: const IntConverter().fromJson(json['unreadCount']),
       otherUsers: (json['otherUsers'] as List<dynamic>)
           .map((e) => BasicUser.fromJson(e as Map<String, dynamic>))
           .toList(),
@@ -34,6 +34,6 @@ Map<String, dynamic> _$ConversationToJson(_Conversation instance) =>
       'lastMessageByUserId': instance.lastMessageByUserId,
       'lastMessageByUser': instance.lastMessageByUser,
       'lastMessageAt': instance.lastMessageAt,
-      'unreadCount': instance.unreadCount,
+      'unreadCount': const IntConverter().toJson(instance.unreadCount),
       'otherUsers': instance.otherUsers,
     };
