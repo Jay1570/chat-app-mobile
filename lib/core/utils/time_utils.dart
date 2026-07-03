@@ -1,9 +1,22 @@
 class TimeUtils {
-  static String timeAgo(String isoString) {
-    final date = DateTime.parse(isoString).toLocal();
+  static String timeAgo(Object value) {
+    late final DateTime date;
+
+    if (value is String) {
+      date = DateTime.parse(value);
+    } else if (value is DateTime) {
+      date = value;
+    } else {
+      throw ArgumentError('Expected String or DateTime');
+    }
+
+    return _timeAgo(date);
+  }
+
+  static String _timeAgo(DateTime date) {
+    date = date.toLocal();
     final now = DateTime.now();
     final diff = now.difference(date);
-
     if (diff.inSeconds < 60) return 'now';
     if (diff.inMinutes < 60) return '${diff.inMinutes}m';
     if (diff.inHours < 24) return '${diff.inHours}h';

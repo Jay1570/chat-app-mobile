@@ -1,12 +1,14 @@
 import 'dart:async';
 
 import 'package:chathub/core/utils/responsive.dart';
+import 'package:chathub/main.dart';
 import 'package:chathub/modules/conversation/conversation_list/layouts/dual_panel_layout.dart';
 import 'package:chathub/modules/conversation/conversation_list/layouts/single_panel_layout.dart';
 import 'package:chathub/modules/conversation/models/conversation.dart';
 import 'package:chathub/modules/conversation/conversation_list/conversation_list_notifier.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 
 class ConversationListScreen extends ConsumerStatefulWidget {
   const ConversationListScreen({super.key});
@@ -48,7 +50,7 @@ class _ConversationListScreenState
     if (context.showDualPanel) {
       setState(() => _selectedConversation = conversation);
     } else {
-      // push chat screen
+      rootNavigatorKey.currentContext?.go('/home/conversations/${conversation.id}');
     }
   }
 

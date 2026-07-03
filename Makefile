@@ -19,7 +19,7 @@ run-linux:
 	flutter run -d linux
 
 build-apk:
-	flutter build apk --release
+	flutter build apk --release --split-per-abi
 
 build-appbundle:
 	flutter build appbundle --release

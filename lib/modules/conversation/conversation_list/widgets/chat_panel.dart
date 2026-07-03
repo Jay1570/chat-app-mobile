@@ -1,3 +1,4 @@
+import 'package:chathub/modules/conversation/message/message_screen.dart';
 import 'package:chathub/modules/conversation/models/conversation.dart';
 import 'package:flutter/material.dart';
 
@@ -9,6 +10,6 @@ class ChatPanel extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     // replace with actual chat screen
-    return const Center(child: Text('Chat panel'));
+    return MessageScreen(conversationId: conversation.id);
   }
 }

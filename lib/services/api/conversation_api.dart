@@ -24,6 +24,9 @@ class ConversationApi {
       json as Map<String, dynamic>,
     ),
   );
+
+  Future<void> markConversationAsRead({required String conversationId}) =>
+      _client.patch("/conversations/$conversationId/read");
 }
 
 final conversationApiProvider = Provider<ConversationApi>((ref) {

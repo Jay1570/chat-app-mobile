@@ -1,6 +1,7 @@
 import "package:chathub/core/network/api_exception.dart";
 import "package:chathub/core/network/web_socket.dart";
 import "package:chathub/services/notification_service.dart";
+import "package:flutter/foundation.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/core/constants/storage_keys.dart";
 import "package:chathub/models/user.dart";
@@ -18,11 +19,18 @@ class AuthNotifier extends AsyncNotifier<User?> {
     try {
       final authApi = ref.read(authApiProvider);
       final response = await authApi.me();
-      await ref.read(webSocketProvider).connect(token: token);
+      final newToken = await storage.read(
+        key: jwtTokenStorageKey,
+      ); // fetching new token because me api can fail on startup so it will stale token
+      await ref.read(webSocketProvider).connect(token: newToken!);
 
       final fcmToken = ref.read(notificationServiceProvider).cachedToken;
       if (fcmToken != null) {
-          await authApi.updateFcmToken(fcmToken);
+        await authApi.updateFcmToken(fcmToken).catchError((dynamic e) {
+          if (kDebugMode) {
+            debugPrint("Failed to update fcm toke:- $e");
+          }
+        });
       }
 
       return response;
@@ -46,7 +54,13 @@ class AuthNotifier extends AsyncNotifier<User?> {
 
     final fcmToken = ref.read(notificationServiceProvider).cachedToken;
     if (fcmToken != null) {
-        await ref.read(authApiProvider).updateFcmToken(fcmToken);
+      await ref.read(authApiProvider).updateFcmToken(fcmToken).catchError((
+        dynamic e,
+      ) {
+        if (kDebugMode) {
+          debugPrint("Failed to update FCM tokrn:- $e");
+        }
+      });
     }
   }
 
@@ -68,4 +82,3 @@ class AuthNotifier extends AsyncNotifier<User?> {
 final authProvider = AsyncNotifierProvider<AuthNotifier, User?>(
   AuthNotifier.new,
 );
-
