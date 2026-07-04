@@ -10,7 +10,7 @@ _Conversation _$ConversationFromJson(Map<String, dynamic> json) =>
     _Conversation(
       id: json['id'] as String,
       name: json['name'] as String,
-      type: json['type'] as String,
+      type: $enumDecode(_$ConversationTypeEnumMap, json['type']),
       lastMessage: json['lastMessage'] as String?,
       lastMessageByUserId: json['lastMessageByUserId'] as String?,
       lastMessageByUser: json['lastMessageByUser'] == null
@@ -29,7 +29,7 @@ Map<String, dynamic> _$ConversationToJson(_Conversation instance) =>
     <String, dynamic>{
       'id': instance.id,
       'name': instance.name,
-      'type': instance.type,
+      'type': _$ConversationTypeEnumMap[instance.type]!,
       'lastMessage': instance.lastMessage,
       'lastMessageByUserId': instance.lastMessageByUserId,
       'lastMessageByUser': instance.lastMessageByUser,
@@ -37,3 +37,8 @@ Map<String, dynamic> _$ConversationToJson(_Conversation instance) =>
       'unreadCount': const IntConverter().toJson(instance.unreadCount),
       'otherUsers': instance.otherUsers,
     };
+
+const _$ConversationTypeEnumMap = {
+  ConversationType.direct: 'direct',
+  ConversationType.group: 'group',
+};

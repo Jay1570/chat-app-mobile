@@ -116,7 +116,7 @@ class ConversationTile extends StatelessWidget {
 
   String _buildLastMessage() {
     if (conversation.lastMessage == null) return 'No messages yet';
-    if (conversation.type == 'group') {
+    if (conversation.type == ConversationType.group) {
       final sender = conversation.lastMessageByUser?.name ?? 'Unknown';
       return '$sender: ${conversation.lastMessage}';
     }

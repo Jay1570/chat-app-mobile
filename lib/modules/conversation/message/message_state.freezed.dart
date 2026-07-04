@@ -14,7 +14,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MessageState {
 
- List<Message> get messages; List<ReadStatus> get readStatus; bool get isLoading; bool get isLoadingMore; String? get error; String? get nextCursor;
+ List<Message> get messages; List<ReadStatus> get readStatus; bool get isLoading; bool get isLoadingMore; String? get error; String? get nextCursor; BasicConversation? get conversation; String get message; bool get isSending;
 /// Create a copy of MessageState
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -25,16 +25,16 @@ $MessageStateCopyWith<MessageState> get copyWith => _$MessageStateCopyWithImpl<M
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageState&&const DeepCollectionEquality().equals(other.messages, messages)&&const DeepCollectionEquality().equals(other.readStatus, readStatus)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.error, error) || other.error == error)&&(identical(other.nextCursor, nextCursor) || other.nextCursor == nextCursor));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageState&&const DeepCollectionEquality().equals(other.messages, messages)&&const DeepCollectionEquality().equals(other.readStatus, readStatus)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.error, error) || other.error == error)&&(identical(other.nextCursor, nextCursor) || other.nextCursor == nextCursor)&&(identical(other.conversation, conversation) || other.conversation == conversation)&&(identical(other.message, message) || other.message == message)&&(identical(other.isSending, isSending) || other.isSending == isSending));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(messages),const DeepCollectionEquality().hash(readStatus),isLoading,isLoadingMore,error,nextCursor);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(messages),const DeepCollectionEquality().hash(readStatus),isLoading,isLoadingMore,error,nextCursor,conversation,message,isSending);
 
 @override
 String toString() {
-  return 'MessageState(messages: $messages, readStatus: $readStatus, isLoading: $isLoading, isLoadingMore: $isLoadingMore, error: $error, nextCursor: $nextCursor)';
+  return 'MessageState(messages: $messages, readStatus: $readStatus, isLoading: $isLoading, isLoadingMore: $isLoadingMore, error: $error, nextCursor: $nextCursor, conversation: $conversation, message: $message, isSending: $isSending)';
 }
 
 
@@ -45,11 +45,11 @@ abstract mixin class $MessageStateCopyWith<$Res>  {
   factory $MessageStateCopyWith(MessageState value, $Res Function(MessageState) _then) = _$MessageStateCopyWithImpl;
 @useResult
 $Res call({
- List<Message> messages, List<ReadStatus> readStatus, bool isLoading, bool isLoadingMore, String? error, String? nextCursor
+ List<Message> messages, List<ReadStatus> readStatus, bool isLoading, bool isLoadingMore, String? error, String? nextCursor, BasicConversation? conversation, String message, bool isSending
 });
 
 
-
+$BasicConversationCopyWith<$Res>? get conversation;
 
 }
 /// @nodoc
@@ -62,7 +62,7 @@ class _$MessageStateCopyWithImpl<$Res>
 
 /// Create a copy of MessageState
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? messages = null,Object? readStatus = null,Object? isLoading = null,Object? isLoadingMore = null,Object? error = freezed,Object? nextCursor = freezed,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? messages = null,Object? readStatus = null,Object? isLoading = null,Object? isLoadingMore = null,Object? error = freezed,Object? nextCursor = freezed,Object? conversation = freezed,Object? message = null,Object? isSending = null,}) {
   return _then(_self.copyWith(
 messages: null == messages ? _self.messages : messages // ignore: cast_nullable_to_non_nullable
 as List<Message>,readStatus: null == readStatus ? _self.readStatus : readStatus // ignore: cast_nullable_to_non_nullable
@@ -70,10 +70,25 @@ as List<ReadStatus>,isLoading: null == isLoading ? _self.isLoading : isLoading /
 as bool,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,nextCursor: freezed == nextCursor ? _self.nextCursor : nextCursor // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,conversation: freezed == conversation ? _self.conversation : conversation // ignore: cast_nullable_to_non_nullable
+as BasicConversation?,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,isSending: null == isSending ? _self.isSending : isSending // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
+/// Create a copy of MessageState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BasicConversationCopyWith<$Res>? get conversation {
+    if (_self.conversation == null) {
+    return null;
+  }
 
+  return $BasicConversationCopyWith<$Res>(_self.conversation!, (value) {
+    return _then(_self.copyWith(conversation: value));
+  });
+}
 }
 
 
@@ -155,10 +170,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Message> messages,  List<ReadStatus> readStatus,  bool isLoading,  bool isLoadingMore,  String? error,  String? nextCursor)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Message> messages,  List<ReadStatus> readStatus,  bool isLoading,  bool isLoadingMore,  String? error,  String? nextCursor,  BasicConversation? conversation,  String message,  bool isSending)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageState() when $default != null:
-return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingMore,_that.error,_that.nextCursor);case _:
+return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingMore,_that.error,_that.nextCursor,_that.conversation,_that.message,_that.isSending);case _:
   return orElse();
 
 }
@@ -176,10 +191,10 @@ return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingM
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Message> messages,  List<ReadStatus> readStatus,  bool isLoading,  bool isLoadingMore,  String? error,  String? nextCursor)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Message> messages,  List<ReadStatus> readStatus,  bool isLoading,  bool isLoadingMore,  String? error,  String? nextCursor,  BasicConversation? conversation,  String message,  bool isSending)  $default,) {final _that = this;
 switch (_that) {
 case _MessageState():
-return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingMore,_that.error,_that.nextCursor);case _:
+return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingMore,_that.error,_that.nextCursor,_that.conversation,_that.message,_that.isSending);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -196,10 +211,10 @@ return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingM
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Message> messages,  List<ReadStatus> readStatus,  bool isLoading,  bool isLoadingMore,  String? error,  String? nextCursor)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Message> messages,  List<ReadStatus> readStatus,  bool isLoading,  bool isLoadingMore,  String? error,  String? nextCursor,  BasicConversation? conversation,  String message,  bool isSending)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageState() when $default != null:
-return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingMore,_that.error,_that.nextCursor);case _:
+return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingMore,_that.error,_that.nextCursor,_that.conversation,_that.message,_that.isSending);case _:
   return null;
 
 }
@@ -211,7 +226,7 @@ return $default(_that.messages,_that.readStatus,_that.isLoading,_that.isLoadingM
 
 
 class _MessageState extends MessageState {
-  const _MessageState({final  List<Message> messages = const [], final  List<ReadStatus> readStatus = const [], this.isLoading = false, this.isLoadingMore = false, this.error, this.nextCursor}): _messages = messages,_readStatus = readStatus,super._();
+  const _MessageState({final  List<Message> messages = const [], final  List<ReadStatus> readStatus = const [], this.isLoading = false, this.isLoadingMore = false, this.error, this.nextCursor, this.conversation, this.message = "", this.isSending = false}): _messages = messages,_readStatus = readStatus,super._();
   
 
  final  List<Message> _messages;
@@ -232,6 +247,9 @@ class _MessageState extends MessageState {
 @override@JsonKey() final  bool isLoadingMore;
 @override final  String? error;
 @override final  String? nextCursor;
+@override final  BasicConversation? conversation;
+@override@JsonKey() final  String message;
+@override@JsonKey() final  bool isSending;
 
 /// Create a copy of MessageState
 /// with the given fields replaced by the non-null parameter values.
@@ -243,16 +261,16 @@ _$MessageStateCopyWith<_MessageState> get copyWith => __$MessageStateCopyWithImp
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageState&&const DeepCollectionEquality().equals(other._messages, _messages)&&const DeepCollectionEquality().equals(other._readStatus, _readStatus)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.error, error) || other.error == error)&&(identical(other.nextCursor, nextCursor) || other.nextCursor == nextCursor));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageState&&const DeepCollectionEquality().equals(other._messages, _messages)&&const DeepCollectionEquality().equals(other._readStatus, _readStatus)&&(identical(other.isLoading, isLoading) || other.isLoading == isLoading)&&(identical(other.isLoadingMore, isLoadingMore) || other.isLoadingMore == isLoadingMore)&&(identical(other.error, error) || other.error == error)&&(identical(other.nextCursor, nextCursor) || other.nextCursor == nextCursor)&&(identical(other.conversation, conversation) || other.conversation == conversation)&&(identical(other.message, message) || other.message == message)&&(identical(other.isSending, isSending) || other.isSending == isSending));
 }
 
 
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_messages),const DeepCollectionEquality().hash(_readStatus),isLoading,isLoadingMore,error,nextCursor);
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_messages),const DeepCollectionEquality().hash(_readStatus),isLoading,isLoadingMore,error,nextCursor,conversation,message,isSending);
 
 @override
 String toString() {
-  return 'MessageState(messages: $messages, readStatus: $readStatus, isLoading: $isLoading, isLoadingMore: $isLoadingMore, error: $error, nextCursor: $nextCursor)';
+  return 'MessageState(messages: $messages, readStatus: $readStatus, isLoading: $isLoading, isLoadingMore: $isLoadingMore, error: $error, nextCursor: $nextCursor, conversation: $conversation, message: $message, isSending: $isSending)';
 }
 
 
@@ -263,11 +281,11 @@ abstract mixin class _$MessageStateCopyWith<$Res> implements $MessageStateCopyWi
   factory _$MessageStateCopyWith(_MessageState value, $Res Function(_MessageState) _then) = __$MessageStateCopyWithImpl;
 @override @useResult
 $Res call({
- List<Message> messages, List<ReadStatus> readStatus, bool isLoading, bool isLoadingMore, String? error, String? nextCursor
+ List<Message> messages, List<ReadStatus> readStatus, bool isLoading, bool isLoadingMore, String? error, String? nextCursor, BasicConversation? conversation, String message, bool isSending
 });
 
 
-
+@override $BasicConversationCopyWith<$Res>? get conversation;
 
 }
 /// @nodoc
@@ -280,7 +298,7 @@ class __$MessageStateCopyWithImpl<$Res>
 
 /// Create a copy of MessageState
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? messages = null,Object? readStatus = null,Object? isLoading = null,Object? isLoadingMore = null,Object? error = freezed,Object? nextCursor = freezed,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? messages = null,Object? readStatus = null,Object? isLoading = null,Object? isLoadingMore = null,Object? error = freezed,Object? nextCursor = freezed,Object? conversation = freezed,Object? message = null,Object? isSending = null,}) {
   return _then(_MessageState(
 messages: null == messages ? _self._messages : messages // ignore: cast_nullable_to_non_nullable
 as List<Message>,readStatus: null == readStatus ? _self._readStatus : readStatus // ignore: cast_nullable_to_non_nullable
@@ -288,11 +306,26 @@ as List<ReadStatus>,isLoading: null == isLoading ? _self.isLoading : isLoading /
 as bool,isLoadingMore: null == isLoadingMore ? _self.isLoadingMore : isLoadingMore // ignore: cast_nullable_to_non_nullable
 as bool,error: freezed == error ? _self.error : error // ignore: cast_nullable_to_non_nullable
 as String?,nextCursor: freezed == nextCursor ? _self.nextCursor : nextCursor // ignore: cast_nullable_to_non_nullable
-as String?,
+as String?,conversation: freezed == conversation ? _self.conversation : conversation // ignore: cast_nullable_to_non_nullable
+as BasicConversation?,message: null == message ? _self.message : message // ignore: cast_nullable_to_non_nullable
+as String,isSending: null == isSending ? _self.isSending : isSending // ignore: cast_nullable_to_non_nullable
+as bool,
   ));
 }
 
+/// Create a copy of MessageState
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BasicConversationCopyWith<$Res>? get conversation {
+    if (_self.conversation == null) {
+    return null;
+  }
 
+  return $BasicConversationCopyWith<$Res>(_self.conversation!, (value) {
+    return _then(_self.copyWith(conversation: value));
+  });
+}
 }
 
 // dart format on

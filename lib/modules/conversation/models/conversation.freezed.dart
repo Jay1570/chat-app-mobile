@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$Conversation {
 
- String get id; String get name; String get type; String? get lastMessage; String? get lastMessageByUserId; BasicUser? get lastMessageByUser; String? get lastMessageAt;@IntConverter() int get unreadCount; List<BasicUser> get otherUsers;
+ String get id; String get name; ConversationType get type; String? get lastMessage; String? get lastMessageByUserId; BasicUser? get lastMessageByUser; String? get lastMessageAt;@IntConverter() int get unreadCount; List<BasicUser> get otherUsers;
 /// Create a copy of Conversation
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -48,7 +48,7 @@ abstract mixin class $ConversationCopyWith<$Res>  {
   factory $ConversationCopyWith(Conversation value, $Res Function(Conversation) _then) = _$ConversationCopyWithImpl;
 @useResult
 $Res call({
- String id, String name, String type, String? lastMessage, String? lastMessageByUserId, BasicUser? lastMessageByUser, String? lastMessageAt,@IntConverter() int unreadCount, List<BasicUser> otherUsers
+ String id, String name, ConversationType type, String? lastMessage, String? lastMessageByUserId, BasicUser? lastMessageByUser, String? lastMessageAt,@IntConverter() int unreadCount, List<BasicUser> otherUsers
 });
 
 
@@ -70,7 +70,7 @@ class _$ConversationCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
+as ConversationType,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
 as String?,lastMessageByUserId: freezed == lastMessageByUserId ? _self.lastMessageByUserId : lastMessageByUserId // ignore: cast_nullable_to_non_nullable
 as String?,lastMessageByUser: freezed == lastMessageByUser ? _self.lastMessageByUser : lastMessageByUser // ignore: cast_nullable_to_non_nullable
 as BasicUser?,lastMessageAt: freezed == lastMessageAt ? _self.lastMessageAt : lastMessageAt // ignore: cast_nullable_to_non_nullable
@@ -173,7 +173,7 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( String id,  String name,  ConversationType type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _Conversation() when $default != null:
 return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessageByUserId,_that.lastMessageByUser,_that.lastMessageAt,_that.unreadCount,_that.otherUsers);case _:
@@ -194,7 +194,7 @@ return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessa
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( String id,  String name,  ConversationType type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)  $default,) {final _that = this;
 switch (_that) {
 case _Conversation():
 return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessageByUserId,_that.lastMessageByUser,_that.lastMessageAt,_that.unreadCount,_that.otherUsers);case _:
@@ -214,7 +214,7 @@ return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessa
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  String type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( String id,  String name,  ConversationType type,  String? lastMessage,  String? lastMessageByUserId,  BasicUser? lastMessageByUser,  String? lastMessageAt, @IntConverter()  int unreadCount,  List<BasicUser> otherUsers)?  $default,) {final _that = this;
 switch (_that) {
 case _Conversation() when $default != null:
 return $default(_that.id,_that.name,_that.type,_that.lastMessage,_that.lastMessageByUserId,_that.lastMessageByUser,_that.lastMessageAt,_that.unreadCount,_that.otherUsers);case _:
@@ -234,7 +234,7 @@ class _Conversation implements Conversation {
 
 @override final  String id;
 @override final  String name;
-@override final  String type;
+@override final  ConversationType type;
 @override final  String? lastMessage;
 @override final  String? lastMessageByUserId;
 @override final  BasicUser? lastMessageByUser;
@@ -281,7 +281,7 @@ abstract mixin class _$ConversationCopyWith<$Res> implements $ConversationCopyWi
   factory _$ConversationCopyWith(_Conversation value, $Res Function(_Conversation) _then) = __$ConversationCopyWithImpl;
 @override @useResult
 $Res call({
- String id, String name, String type, String? lastMessage, String? lastMessageByUserId, BasicUser? lastMessageByUser, String? lastMessageAt,@IntConverter() int unreadCount, List<BasicUser> otherUsers
+ String id, String name, ConversationType type, String? lastMessage, String? lastMessageByUserId, BasicUser? lastMessageByUser, String? lastMessageAt,@IntConverter() int unreadCount, List<BasicUser> otherUsers
 });
 
 
@@ -303,7 +303,7 @@ class __$ConversationCopyWithImpl<$Res>
 id: null == id ? _self.id : id // ignore: cast_nullable_to_non_nullable
 as String,name: null == name ? _self.name : name // ignore: cast_nullable_to_non_nullable
 as String,type: null == type ? _self.type : type // ignore: cast_nullable_to_non_nullable
-as String,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
+as ConversationType,lastMessage: freezed == lastMessage ? _self.lastMessage : lastMessage // ignore: cast_nullable_to_non_nullable
 as String?,lastMessageByUserId: freezed == lastMessageByUserId ? _self.lastMessageByUserId : lastMessageByUserId // ignore: cast_nullable_to_non_nullable
 as String?,lastMessageByUser: freezed == lastMessageByUser ? _self.lastMessageByUser : lastMessageByUser // ignore: cast_nullable_to_non_nullable
 as BasicUser?,lastMessageAt: freezed == lastMessageAt ? _self.lastMessageAt : lastMessageAt // ignore: cast_nullable_to_non_nullable

@@ -14,6 +14,9 @@ _MessageListResponse _$MessageListResponseFromJson(Map<String, dynamic> json) =>
       readStatus: (json['readStatus'] as List<dynamic>)
           .map((e) => ReadStatus.fromJson(e as Map<String, dynamic>))
           .toList(),
+      conversation: BasicConversation.fromJson(
+        json['conversation'] as Map<String, dynamic>,
+      ),
     );
 
 Map<String, dynamic> _$MessageListResponseToJson(
@@ -21,4 +24,5 @@ Map<String, dynamic> _$MessageListResponseToJson(
 ) => <String, dynamic>{
   'messages': instance.messages,
   'readStatus': instance.readStatus,
+  'conversation': instance.conversation,
 };

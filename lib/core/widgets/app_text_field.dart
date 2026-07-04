@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
-class AppTextField extends StatelessWidget {
+class AppTextField extends StatefulWidget {
   const AppTextField({
     super.key,
-    this.controller,
+    required this.value,
     this.focusNode,
     this.labelText,
     this.hintText,
@@ -23,7 +23,7 @@ class AppTextField extends StatelessWidget {
     this.errorText,
   });
 
-  final TextEditingController? controller;
+  final String value;
   final FocusNode? focusNode;
 
   final String? labelText;
@@ -51,12 +51,46 @@ class AppTextField extends StatelessWidget {
   final bool isRequired;
 
   @override
+  State<AppTextField> createState() => _AppTextFieldState();
+}
+
+class _AppTextFieldState extends State<AppTextField> {
+  late final TextEditingController _controller;
+
+  @override
+  void initState() {
+    super.initState();
+    _controller = TextEditingController(text: widget.value);
+  }
+
+  @override
+  void didUpdateWidget(covariant AppTextField oldWidget) {
+    super.didUpdateWidget(oldWidget);
+
+    if (widget.value != _controller.text) {
+      _controller.value = _controller.value.copyWith(
+        text: widget.value,
+        selection: TextSelection.collapsed(
+          offset: widget.value.length,
+        ),
+        composing: TextRange.empty,
+      );
+    }
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     final colors = theme.colorScheme;
 
     final border =
-        outlineBorder ??
+        widget.outlineBorder ??
         OutlineInputBorder(
           borderRadius: BorderRadius.circular(10),
         );
@@ -64,20 +98,18 @@ class AppTextField extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        if (labelText != null) ...[
+        if (widget.labelText != null) ...[
           RichText(
             text: TextSpan(
               style: theme.textTheme.labelLarge?.copyWith(
                 color: colors.onSurface,
               ),
               children: [
-                TextSpan(text: labelText),
-                if (isRequired)
+                TextSpan(text: widget.labelText),
+                if (widget.isRequired)
                   TextSpan(
                     text: " *",
-                    style: TextStyle(
-                      color: colors.error,
-                    ),
+                    style: TextStyle(color: colors.error),
                   ),
               ],
             ),
@@ -85,44 +117,35 @@ class AppTextField extends StatelessWidget {
           const SizedBox(height: 8),
         ],
         TextFormField(
-          controller: controller,
-          focusNode: focusNode,
-          keyboardType: keyboardType,
-          textInputAction: textInputAction,
-          obscureText: obscureText,
-          enabled: enabled,
-          maxLines: obscureText ? 1 : maxLines,
-          forceErrorText: errorText,
-          minLines: minLines,
-          validator: validator,
-          onChanged: onChanged,
-          onFieldSubmitted: onFieldSubmitted,
+          controller: _controller,
+          focusNode: widget.focusNode,
+          keyboardType: widget.keyboardType,
+          textInputAction: widget.textInputAction,
+          obscureText: widget.obscureText,
+          enabled: widget.enabled,
+          maxLines: widget.obscureText ? 1 : widget.maxLines,
+          minLines: widget.minLines,
+          validator: widget.validator,
+          forceErrorText: widget.errorText,
+          onChanged: widget.onChanged,
+          onFieldSubmitted: widget.onFieldSubmitted,
           decoration: InputDecoration(
-            hintText: hintText,
-            prefixIcon: prefixIcon,
-            suffixIcon: suffixIcon,
-
+            hintText: widget.hintText,
+            prefixIcon: widget.prefixIcon,
+            suffixIcon: widget.suffixIcon,
             border: border,
-
             enabledBorder: border.copyWith(
-              borderSide: BorderSide(
-                color: colors.outline,
-              ),
+              borderSide: BorderSide(color: colors.outline),
             ),
-
             focusedBorder: border.copyWith(
               borderSide: BorderSide(
                 color: colors.primary,
                 width: 2,
               ),
             ),
-
             errorBorder: border.copyWith(
-              borderSide: BorderSide(
-                color: colors.error,
-              ),
+              borderSide: BorderSide(color: colors.error),
             ),
-
             focusedErrorBorder: border.copyWith(
               borderSide: BorderSide(
                 color: colors.error,

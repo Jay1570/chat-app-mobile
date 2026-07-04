@@ -5,12 +5,20 @@ import 'package:freezed_annotation/freezed_annotation.dart';
 part 'conversation.freezed.dart';
 part 'conversation.g.dart';
 
+enum ConversationType {
+  @JsonValue("direct")
+  direct,
+
+  @JsonValue("group")
+  group,
+}
+
 @freezed
 abstract class Conversation with _$Conversation {
   const factory Conversation({
     required String id,
     required String name,
-    required String type,
+    required ConversationType type,
     String? lastMessage,
     String? lastMessageByUserId,
     BasicUser? lastMessageByUser,

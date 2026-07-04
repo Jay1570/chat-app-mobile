@@ -1,4 +1,5 @@
 import 'package:chathub/models/message.dart';
+import 'package:chathub/modules/conversation/models/basic_conversation.dart';
 import 'package:chathub/modules/conversation/models/message_read_status.dart';
 import 'package:freezed_annotation/freezed_annotation.dart';
 
@@ -15,6 +16,9 @@ abstract class MessageState with _$MessageState {
     @Default(false) bool isLoadingMore,
     String? error,
     String? nextCursor,
+    BasicConversation? conversation,
+    @Default("") String message,
+    @Default(false) bool isSending,
   }) = _MessageState;
 
   bool get hasMore => nextCursor != null;

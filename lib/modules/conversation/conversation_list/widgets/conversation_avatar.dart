@@ -13,7 +13,7 @@ class Avatar extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    if (conversation.type == 'direct') {
+    if (conversation.type == ConversationType.direct) {
       final other = conversation.otherUsers.firstOrNull;
       return CircleAvatar(
         radius: 24,

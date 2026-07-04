@@ -63,6 +63,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 24),
 
                 AppTextField(
+                  value: loginState.email,
                   hintText: "Email",
                   labelText: "Email",
                   onChanged: controller.setEmail,
@@ -75,6 +76,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                 const SizedBox(height: 16),
 
                 AppTextField(
+                  value: loginState.password,
                   hintText: "Password",
                   labelText: "Password",
                   onChanged: controller.setPassword,

@@ -46,6 +46,7 @@ class MessageNotifier extends Notifier<MessageState> {
         nextCursor: result.messages.isNotEmpty
             ? result.messages.last.createdAt.toIso8601String()
             : null,
+        conversation: result.conversation,
       );
     } catch (e, st) {
       state = state.copyWith(
@@ -69,6 +70,7 @@ class MessageNotifier extends Notifier<MessageState> {
         nextCursor: result.messages.isNotEmpty
             ? result.messages.last.createdAt.toIso8601String()
             : null,
+        conversation: result.conversation,
       );
     } catch (e) {
       state = state.copyWith(isLoadingMore: false, error: e.toString());
@@ -89,6 +91,28 @@ class MessageNotifier extends Notifier<MessageState> {
     final messages = [message, ...state.messages];
 
     state = state.copyWith(messages: messages);
+  }
+
+  Future<void> sendMessage() async {
+    try {
+      if (state.message.isEmpty || state.isSending) return;
+      state = state.copyWith(isSending: true);
+      await ref
+          .read(messageApiProvider)
+          .sendMessage(
+            _conversationId,
+            content: state.message,
+          );
+      state = state.copyWith(message: "");
+    } catch (e) {
+      if (kDebugMode) debugPrint('sendMessage error: $e');
+    } finally {
+      state = state.copyWith(isSending: false);
+    }
+  }
+
+  void setMessage(String message) {
+    state = state.copyWith(message: message);
   }
 }
 

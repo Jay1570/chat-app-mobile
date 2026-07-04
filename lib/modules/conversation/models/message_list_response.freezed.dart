@@ -15,7 +15,7 @@ T _$identity<T>(T value) => value;
 /// @nodoc
 mixin _$MessageListResponse {
 
- List<Message> get messages; List<ReadStatus> get readStatus;
+ List<Message> get messages; List<ReadStatus> get readStatus; BasicConversation get conversation;
 /// Create a copy of MessageListResponse
 /// with the given fields replaced by the non-null parameter values.
 @JsonKey(includeFromJson: false, includeToJson: false)
@@ -28,16 +28,16 @@ $MessageListResponseCopyWith<MessageListResponse> get copyWith => _$MessageListR
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageListResponse&&const DeepCollectionEquality().equals(other.messages, messages)&&const DeepCollectionEquality().equals(other.readStatus, readStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is MessageListResponse&&const DeepCollectionEquality().equals(other.messages, messages)&&const DeepCollectionEquality().equals(other.readStatus, readStatus)&&(identical(other.conversation, conversation) || other.conversation == conversation));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(messages),const DeepCollectionEquality().hash(readStatus));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(messages),const DeepCollectionEquality().hash(readStatus),conversation);
 
 @override
 String toString() {
-  return 'MessageListResponse(messages: $messages, readStatus: $readStatus)';
+  return 'MessageListResponse(messages: $messages, readStatus: $readStatus, conversation: $conversation)';
 }
 
 
@@ -48,11 +48,11 @@ abstract mixin class $MessageListResponseCopyWith<$Res>  {
   factory $MessageListResponseCopyWith(MessageListResponse value, $Res Function(MessageListResponse) _then) = _$MessageListResponseCopyWithImpl;
 @useResult
 $Res call({
- List<Message> messages, List<ReadStatus> readStatus
+ List<Message> messages, List<ReadStatus> readStatus, BasicConversation conversation
 });
 
 
-
+$BasicConversationCopyWith<$Res> get conversation;
 
 }
 /// @nodoc
@@ -65,14 +65,24 @@ class _$MessageListResponseCopyWithImpl<$Res>
 
 /// Create a copy of MessageListResponse
 /// with the given fields replaced by the non-null parameter values.
-@pragma('vm:prefer-inline') @override $Res call({Object? messages = null,Object? readStatus = null,}) {
+@pragma('vm:prefer-inline') @override $Res call({Object? messages = null,Object? readStatus = null,Object? conversation = null,}) {
   return _then(_self.copyWith(
 messages: null == messages ? _self.messages : messages // ignore: cast_nullable_to_non_nullable
 as List<Message>,readStatus: null == readStatus ? _self.readStatus : readStatus // ignore: cast_nullable_to_non_nullable
-as List<ReadStatus>,
+as List<ReadStatus>,conversation: null == conversation ? _self.conversation : conversation // ignore: cast_nullable_to_non_nullable
+as BasicConversation,
   ));
 }
-
+/// Create a copy of MessageListResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BasicConversationCopyWith<$Res> get conversation {
+  
+  return $BasicConversationCopyWith<$Res>(_self.conversation, (value) {
+    return _then(_self.copyWith(conversation: value));
+  });
+}
 }
 
 
@@ -154,10 +164,10 @@ return $default(_that);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Message> messages,  List<ReadStatus> readStatus)?  $default,{required TResult orElse(),}) {final _that = this;
+@optionalTypeArgs TResult maybeWhen<TResult extends Object?>(TResult Function( List<Message> messages,  List<ReadStatus> readStatus,  BasicConversation conversation)?  $default,{required TResult orElse(),}) {final _that = this;
 switch (_that) {
 case _MessageListResponse() when $default != null:
-return $default(_that.messages,_that.readStatus);case _:
+return $default(_that.messages,_that.readStatus,_that.conversation);case _:
   return orElse();
 
 }
@@ -175,10 +185,10 @@ return $default(_that.messages,_that.readStatus);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Message> messages,  List<ReadStatus> readStatus)  $default,) {final _that = this;
+@optionalTypeArgs TResult when<TResult extends Object?>(TResult Function( List<Message> messages,  List<ReadStatus> readStatus,  BasicConversation conversation)  $default,) {final _that = this;
 switch (_that) {
 case _MessageListResponse():
-return $default(_that.messages,_that.readStatus);case _:
+return $default(_that.messages,_that.readStatus,_that.conversation);case _:
   throw StateError('Unexpected subclass');
 
 }
@@ -195,10 +205,10 @@ return $default(_that.messages,_that.readStatus);case _:
 /// }
 /// ```
 
-@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Message> messages,  List<ReadStatus> readStatus)?  $default,) {final _that = this;
+@optionalTypeArgs TResult? whenOrNull<TResult extends Object?>(TResult? Function( List<Message> messages,  List<ReadStatus> readStatus,  BasicConversation conversation)?  $default,) {final _that = this;
 switch (_that) {
 case _MessageListResponse() when $default != null:
-return $default(_that.messages,_that.readStatus);case _:
+return $default(_that.messages,_that.readStatus,_that.conversation);case _:
   return null;
 
 }
@@ -210,7 +220,7 @@ return $default(_that.messages,_that.readStatus);case _:
 @JsonSerializable()
 
 class _MessageListResponse implements MessageListResponse {
-  const _MessageListResponse({required final  List<Message> messages, required final  List<ReadStatus> readStatus}): _messages = messages,_readStatus = readStatus;
+  const _MessageListResponse({required final  List<Message> messages, required final  List<ReadStatus> readStatus, required this.conversation}): _messages = messages,_readStatus = readStatus;
   factory _MessageListResponse.fromJson(Map<String, dynamic> json) => _$MessageListResponseFromJson(json);
 
  final  List<Message> _messages;
@@ -227,6 +237,7 @@ class _MessageListResponse implements MessageListResponse {
   return EqualUnmodifiableListView(_readStatus);
 }
 
+@override final  BasicConversation conversation;
 
 /// Create a copy of MessageListResponse
 /// with the given fields replaced by the non-null parameter values.
@@ -241,16 +252,16 @@ Map<String, dynamic> toJson() {
 
 @override
 bool operator ==(Object other) {
-  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageListResponse&&const DeepCollectionEquality().equals(other._messages, _messages)&&const DeepCollectionEquality().equals(other._readStatus, _readStatus));
+  return identical(this, other) || (other.runtimeType == runtimeType&&other is _MessageListResponse&&const DeepCollectionEquality().equals(other._messages, _messages)&&const DeepCollectionEquality().equals(other._readStatus, _readStatus)&&(identical(other.conversation, conversation) || other.conversation == conversation));
 }
 
 @JsonKey(includeFromJson: false, includeToJson: false)
 @override
-int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_messages),const DeepCollectionEquality().hash(_readStatus));
+int get hashCode => Object.hash(runtimeType,const DeepCollectionEquality().hash(_messages),const DeepCollectionEquality().hash(_readStatus),conversation);
 
 @override
 String toString() {
-  return 'MessageListResponse(messages: $messages, readStatus: $readStatus)';
+  return 'MessageListResponse(messages: $messages, readStatus: $readStatus, conversation: $conversation)';
 }
 
 
@@ -261,11 +272,11 @@ abstract mixin class _$MessageListResponseCopyWith<$Res> implements $MessageList
   factory _$MessageListResponseCopyWith(_MessageListResponse value, $Res Function(_MessageListResponse) _then) = __$MessageListResponseCopyWithImpl;
 @override @useResult
 $Res call({
- List<Message> messages, List<ReadStatus> readStatus
+ List<Message> messages, List<ReadStatus> readStatus, BasicConversation conversation
 });
 
 
-
+@override $BasicConversationCopyWith<$Res> get conversation;
 
 }
 /// @nodoc
@@ -278,15 +289,25 @@ class __$MessageListResponseCopyWithImpl<$Res>
 
 /// Create a copy of MessageListResponse
 /// with the given fields replaced by the non-null parameter values.
-@override @pragma('vm:prefer-inline') $Res call({Object? messages = null,Object? readStatus = null,}) {
+@override @pragma('vm:prefer-inline') $Res call({Object? messages = null,Object? readStatus = null,Object? conversation = null,}) {
   return _then(_MessageListResponse(
 messages: null == messages ? _self._messages : messages // ignore: cast_nullable_to_non_nullable
 as List<Message>,readStatus: null == readStatus ? _self._readStatus : readStatus // ignore: cast_nullable_to_non_nullable
-as List<ReadStatus>,
+as List<ReadStatus>,conversation: null == conversation ? _self.conversation : conversation // ignore: cast_nullable_to_non_nullable
+as BasicConversation,
   ));
 }
 
-
+/// Create a copy of MessageListResponse
+/// with the given fields replaced by the non-null parameter values.
+@override
+@pragma('vm:prefer-inline')
+$BasicConversationCopyWith<$Res> get conversation {
+  
+  return $BasicConversationCopyWith<$Res>(_self.conversation, (value) {
+    return _then(_self.copyWith(conversation: value));
+  });
+}
 }
 
 // dart format on

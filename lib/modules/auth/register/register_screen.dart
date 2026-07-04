@@ -62,6 +62,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 ),
                 const SizedBox(height: 24),
                 AppTextField(
+                  value: state.name,
                   labelText: "Name",
                   hintText: "Name",
                   onChanged: controller.setName,
@@ -73,6 +74,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: 16),
 
                 AppTextField(
+                  value: state.email,
                   labelText: "Email",
                   hintText: "Email",
                   onChanged: controller.setEmail,
@@ -84,6 +86,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: 16),
 
                 AppTextField(
+                  value: state.password,
                   labelText: "Password",
                   hintText: "Password",
                   obscureText: true,
@@ -96,6 +99,7 @@ class _RegisterScreenState extends ConsumerState<RegisterScreen> {
                 const SizedBox(height: 16),
 
                 AppTextField(
+                  value: state.confirmPassword,
                   labelText: "Confirm Password",
                   hintText: "Confirm Password",
                   obscureText: !state.showConfirmPassword,

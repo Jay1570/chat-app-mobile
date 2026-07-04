@@ -1,9 +1,11 @@
-// lib/modules/conversation/message/message_screen.dart
 import 'package:chathub/core/auth/auth_notifier.dart';
+import 'package:chathub/core/error_handler.dart';
+import 'package:chathub/core/utils/snackbar.dart';
 import 'package:chathub/core/utils/time_utils.dart';
 import 'package:chathub/core/widgets/app_bar.dart';
 import 'package:chathub/core/widgets/app_empty_state.dart';
 import 'package:chathub/core/widgets/app_error_state.dart';
+import 'package:chathub/core/widgets/app_text_field.dart';
 import 'package:chathub/main.dart';
 import 'package:chathub/models/message.dart';
 import 'package:chathub/modules/conversation/message/message_notifier.dart';
@@ -43,45 +45,72 @@ class _MessageScreenState extends ConsumerState<MessageScreen> {
     }
   }
 
+  Future<void> _sendMessage() async {
+    try {
+      await ref
+          .read(messageProvider(widget.conversationId).notifier)
+          .sendMessage();
+    } catch (e) {
+      final err = resolveError(e);
+      AppSnackbar.showError(message: err.message, title: err.title);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final state = ref.watch(messageProvider(widget.conversationId));
+    final controller = ref.watch(
+      messageProvider(widget.conversationId).notifier,
+    );
 
     return Scaffold(
       appBar: ChatHubAppBar(
-        title: widget
-            .conversationId, // replace with conversation name once API ready
-        leading: BackButton(
-          onPressed: () => rootNavigatorKey.currentContext?.pop(),
-        ),
+        title: state.conversation != null ? state.conversation!.name : "",
+        leading: rootNavigatorKey.currentContext?.canPop() ?? false
+            ? BackButton(
+                onPressed: () => rootNavigatorKey.currentContext?.pop(),
+              )
+            : null,
       ),
       body: SafeArea(
-        child: switch (state) {
-          MessageState(isLoading: true) => const Center(
-            child: CircularProgressIndicator(),
-          ),
+        child: Column(
+          children: [
+            Expanded(
+              child: switch (state) {
+                MessageState(isLoading: true) => const Center(
+                  child: CircularProgressIndicator(),
+                ),
 
-          MessageState(error: final error?) when error.isNotEmpty =>
-            AppErrorState(
-              message: error,
-              onRetry: () => ref
-                  .read(messageProvider(widget.conversationId).notifier)
-                  .fetch(),
+                MessageState(error: final error?) when error.isNotEmpty =>
+                  AppErrorState(
+                    message: error,
+                    onRetry: () => ref
+                        .read(messageProvider(widget.conversationId).notifier)
+                        .fetch(),
+                  ),
+
+                MessageState(messages: final messages) when messages.isEmpty =>
+                  const AppEmptyState(
+                    icon: Icons.chat_bubble_outline,
+                    title: 'No messages yet',
+                    subtitle: 'Send a message to start the conversation',
+                  ),
+
+                _ => _MessageList(
+                  state: state,
+                  conversationId: widget.conversationId,
+                  scrollController: _scrollController,
+                ),
+              },
             ),
-
-          MessageState(messages: final messages) when messages.isEmpty =>
-            const AppEmptyState(
-              icon: Icons.chat_bubble_outline,
-              title: 'No messages yet',
-              subtitle: 'Send a message to start the conversation',
+            _ChatBox(
+              value: state.message,
+              isSending: state.isSending,
+              onSend: _sendMessage,
+              onChange: controller.setMessage,
             ),
-
-          _ => _MessageList(
-            state: state,
-            conversationId: widget.conversationId,
-            scrollController: _scrollController,
-          ),
-        },
+          ],
+        ),
       ),
     );
   }
@@ -189,6 +218,71 @@ class _MessageBubble extends ConsumerWidget {
             ),
           ],
         ),
+      ),
+    );
+  }
+}
+
+class _ChatBox extends StatelessWidget {
+  const _ChatBox({
+    required this.value,
+    required this.isSending,
+    required this.onSend,
+    required this.onChange,
+  });
+
+  final String value;
+  final bool isSending;
+  final VoidCallback onSend;
+  final ValueChanged<String> onChange;
+
+  @override
+  Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+
+    return Container(
+      decoration: BoxDecoration(
+        color: colorScheme.surface,
+        border: Border(
+          top: BorderSide(color: colorScheme.outlineVariant, width: 1),
+        ),
+      ),
+      padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 8),
+      child: Row(
+        children: [
+          Expanded(
+            child: AppTextField(
+              value: value,
+              minLines: 1,
+              maxLines: 1,
+              hintText: 'Type a message...',
+              outlineBorder: OutlineInputBorder(
+                borderRadius: BorderRadius.circular(24),
+                borderSide: BorderSide.none,
+              ),
+              onFieldSubmitted: (_) => onSend(),
+              onChanged: onChange,
+            ),
+          ),
+          const SizedBox(width: 8),
+          isSending
+              ? const SizedBox(
+                  width: 40,
+                  height: 40,
+                  child: Padding(
+                    padding: EdgeInsets.all(8),
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
+                )
+              : IconButton.filled(
+                  onPressed: onSend,
+                  icon: const Icon(Icons.send_rounded),
+                  style: IconButton.styleFrom(
+                    backgroundColor: colorScheme.primary,
+                    foregroundColor: colorScheme.onPrimary,
+                  ),
+                ),
+        ],
       ),
     );
   }
