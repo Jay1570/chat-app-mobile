@@ -1,4 +1,4 @@
-const domain = "192.168.100.21:5000";
+const domain = "api.chathub.localhost";
 
 const baseUrl = "http://$domain";
 
