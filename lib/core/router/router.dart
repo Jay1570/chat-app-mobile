@@ -1,7 +1,7 @@
 import "package:chathub/main.dart";
 import "package:chathub/modules/conversation/conversation_list/conversation_list_screen.dart";
 import "package:chathub/modules/conversation/message/message_screen.dart";
-import "package:flutter/cupertino.dart";
+import "package:flutter/widgets.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:go_router/go_router.dart";
 import "package:chathub/core/auth/auth_notifier.dart";

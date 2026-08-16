@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:chathub/core/constants/base_url.dart';
 import 'package:chathub/models/socket_event.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 

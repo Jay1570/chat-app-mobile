@@ -1,7 +1,7 @@
 import 'package:chathub/core/utils/time_utils.dart';
 import 'package:chathub/modules/conversation/conversation_list/widgets/conversation_avatar.dart';
 import 'package:chathub/modules/conversation/models/conversation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ConversationTile extends StatelessWidget {
   const ConversationTile({

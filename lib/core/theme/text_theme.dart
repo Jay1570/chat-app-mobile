@@ -1,21 +1,21 @@
-import 'package:flutter/material.dart';
-import 'package:google_fonts/google_fonts.dart';
+import 'package:material_ui/material_ui.dart';
 
 TextTheme createTextTheme(
   BuildContext context,
   String bodyFontString,
   String displayFontString,
 ) {
-  TextTheme baseTextTheme = Theme.of(context).textTheme;
-  TextTheme bodyTextTheme = GoogleFonts.getTextTheme(
-    bodyFontString,
-    baseTextTheme,
+  final baseTextTheme = Theme.of(context).textTheme;
+
+  final bodyTextTheme = baseTextTheme.apply(
+    fontFamily: bodyFontString,
   );
-  TextTheme displayTextTheme = GoogleFonts.getTextTheme(
-    displayFontString,
-    baseTextTheme,
+
+  final displayTextTheme = baseTextTheme.apply(
+    fontFamily: displayFontString,
   );
-  TextTheme textTheme = displayTextTheme.copyWith(
+
+  return displayTextTheme.copyWith(
     bodyLarge: bodyTextTheme.bodyLarge,
     bodyMedium: bodyTextTheme.bodyMedium,
     bodySmall: bodyTextTheme.bodySmall,
@@ -23,5 +23,4 @@ TextTheme createTextTheme(
     labelMedium: bodyTextTheme.labelMedium,
     labelSmall: bodyTextTheme.labelSmall,
   );
-  return textTheme;
 }
