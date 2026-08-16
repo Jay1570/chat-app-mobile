@@ -3,7 +3,7 @@ import 'package:chathub/modules/conversation/conversation_list/widgets/conversat
 import 'package:chathub/modules/conversation/conversation_list/widgets/conversaton_panel.dart';
 import 'package:chathub/modules/conversation/conversation_list/widgets/conversaton_search_bar.dart';
 import 'package:chathub/modules/conversation/models/conversation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class SinglePanelLayout extends StatelessWidget {
   const SinglePanelLayout({

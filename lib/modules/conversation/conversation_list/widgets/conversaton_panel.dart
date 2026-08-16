@@ -2,7 +2,7 @@ import 'package:chathub/core/error_handler.dart';
 import 'package:chathub/modules/conversation/conversation_list/conversation_list_notifier.dart';
 import 'package:chathub/modules/conversation/conversation_list/conversation_list_state.dart';
 import 'package:chathub/modules/conversation/models/conversation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:chathub/core/widgets/app_empty_state.dart';
 import 'package:chathub/core/widgets/app_error_state.dart';

@@ -1,6 +1,6 @@
 import 'package:chathub/modules/conversation/message/message_screen.dart';
 import 'package:chathub/modules/conversation/models/conversation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ChatPanel extends StatelessWidget {
   const ChatPanel({super.key, required this.conversation});

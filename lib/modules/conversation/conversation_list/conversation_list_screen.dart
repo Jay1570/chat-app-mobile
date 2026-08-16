@@ -6,7 +6,7 @@ import 'package:chathub/modules/conversation/conversation_list/layouts/dual_pane
 import 'package:chathub/modules/conversation/conversation_list/layouts/single_panel_layout.dart';
 import 'package:chathub/modules/conversation/models/conversation.dart';
 import 'package:chathub/modules/conversation/conversation_list/conversation_list_notifier.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
 

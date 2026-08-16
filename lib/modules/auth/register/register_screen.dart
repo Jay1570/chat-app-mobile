@@ -2,7 +2,7 @@ import "package:chathub/core/error_handler.dart";
 import "package:chathub/core/utils/snackbar.dart";
 import "package:chathub/core/widgets/app_text_field.dart";
 import "package:chathub/main.dart";
-import "package:flutter/material.dart";
+import "package:material_ui/material_ui.dart";
 import "package:flutter_riverpod/flutter_riverpod.dart";
 import "package:chathub/modules/auth/register/register_notifier.dart";
 import "package:go_router/go_router.dart";

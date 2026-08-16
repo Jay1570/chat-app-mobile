@@ -1,6 +1,6 @@
 import 'package:chathub/modules/conversation/conversation_list/widgets/conversation_tile.dart';
 import 'package:chathub/modules/conversation/models/conversation.dart';
-import 'package:flutter/material.dart';
+import 'package:material_ui/material_ui.dart';
 
 class ConversationList extends StatelessWidget {
   const ConversationList({
